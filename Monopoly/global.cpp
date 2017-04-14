@@ -14,6 +14,7 @@ DWORD WINAPI ListenThread(LPVOID param)
 {
 	DWORD eventNumber;                                //这两个变量只是占位用的
 	INPUT_RECORD record;
+	hInput = GetStdHandle(STD_INPUT_HANDLE);
 	while (!LEAVEGAME)
 	{
 		if (ListenThreadState)
@@ -23,7 +24,7 @@ DWORD WINAPI ListenThread(LPVOID param)
 				if (record.EventType == MOUSE_EVENT&&record.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 				{
 					GetCursorPos(&mousePos);
-					ScreenToClient(hWnd, &mousePos);
+					//ScreenToClient(hWnd, &mousePos);
 					Mouse_State = Mouse_LeftClick;      //处理完click消息后记得恢复鼠标状态
 					buttonManager->getMessage();
 				}

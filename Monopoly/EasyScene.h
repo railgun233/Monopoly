@@ -17,11 +17,13 @@ public:
 	~EasyScene(){}
 
 	void loadData();                                  //所有Cell的数据也是在这里导入
-	void paint();                                     //绘制界面
-	void run();                                       //运行
 	void loadPlayer();                                //载入玩家数据
+
+	void paint();                                     //绘制界面
 	void MessageBar();                                //用于绘制消息栏，显示各个玩家的实时消息
 	void drawCell();
 	void drawButton();
+
+	void run();                                       //运行
 };
 static EasyScene *easyScene;

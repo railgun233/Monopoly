@@ -15,4 +15,4 @@ public:
 		return (mouse.x >= x1) && (mouse.x<=x2) && (mouse.y>=y1) && (mouse.y <= y2);
 	}
 };
-static Button *Button_Start;                  //变量名与常量名特别容易混淆，老哥悠着点
+extern Button** ButtonList;

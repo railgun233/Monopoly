@@ -9,7 +9,6 @@ GameEngine::GameEngine()
 	hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	hInput = GetStdHandle(STD_INPUT_HANDLE);
 	GetCursorPos(&mousePos);                       //时刻牢记使用mousePos前要先转为客户区坐标
-	ScreenToClient(hWnd, &mousePos);
 
 	createListenThread();
 
@@ -30,11 +29,13 @@ void GameEngine::initialize()
 	/*****************************************读取数据部分**************************************************/
 	char discard;                                 //虽然有读取到中文字符但应该无关紧要
 	fstream input("data/GameEngineData.txt");
+
+	//读取窗口缓冲区大小与窗口大小
 	while (input >> discard && (discard != '#'))
 		continue;
 	input >> ConsoleBufferWidth >> ConsoleBufferHeight >> WindowWidth >> WindowHeight;
-	input.close();
 
+	input.close();
 	/********************************************操作部分**************************************************/
 	COORD bufferSize = { ConsoleBufferWidth,ConsoleBufferHeight };
 	SetConsoleScreenBufferSize(hOutput, bufferSize);                            //改变缓冲区大小

@@ -21,28 +21,26 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 {
 	switch (button)
 	{
-	case Btn_Empty:
-		break;
 	case Btn_Start:
+		{
+			HDC hdc = GetDC(hWnd);
+			Ellipse(hdc, 50, 50, 100, 100);
+			ReleaseDC(hWnd, hdc);
+		}
+		break;
+	case Btn_Empty:
 		break;
 	default:
 		break;
 	}
 }
 
-void ButtonManager::addButton(BUTTON_TYPE button_type, Button *button)
-{
-	buttonList.insert({ button_type, button });
-}
-
 BUTTON_TYPE ButtonManager::isButton()
 {
-	for (auto iter = buttonList.begin(); iter != buttonList.end(); ++iter)
-	{
-		if ((*iter).second->inButton(mousePos))
-			return (*iter).first;
-	}
-	return BUTTON_TYPE::Btn_Empty;
+	for (int i = 0; i < ButtonCount; ++i)
+		if (ButtonList[i]->inButton(mousePos))
+			return BUTTON_TYPE(i);
+	return Btn_Empty;
 }
 
 CellManager::CellManager()

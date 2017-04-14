@@ -4,28 +4,24 @@
 
 class Scene;
 
-typedef	int Master;
-typedef int Quality;
-
-enum {Cell_No=0}Cell_Sign;
-
 class Cell
 {
 public:
-	int left;                        //一旦构造，这四个值不能修改
+	int left;                              //一旦构造，这四个值不能修改
 	int top;
 	int right;
 	int bottom;
 
+	int number;                           //格子的编号
 	int price;
-	Master master;                   //属于谁，若无主则为0
-	Quality quality;                 //空地还是有属性的地
+	PLAYER_TYPE master;                   //属于谁，若无主则为0
+	CELL_TYPE cellType;                   //空地还是有属性的地
 
-	Cell(int left,int top,int right,int bottom,int price,Master master=Player_No,Quality quality=Cell_No);
+	Cell(int left,int top,int right,int bottom,int price,PLAYER_TYPE master=Player_No,CELL_TYPE cellType=Cell_Empty);
 	~Cell(){}
 
-	void updateData(Quality quality,int price);
-	void updatePlayer(Master master);
+	void updateData(CELL_TYPE cellType,int price);
+	void updatePlayer(PLAYER_TYPE master);
 
 	friend class Scene;
 };

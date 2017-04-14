@@ -5,7 +5,7 @@ class Player
 {
 public:
 	wchar_t name;
-	PLAYER_SIGN sign;
+	PLAYER_TYPE sign;
 	int money;
 
 	Player();

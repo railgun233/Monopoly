@@ -4,38 +4,45 @@
 #include<Windows.h>
 
 /***************************************类型定义*******************************************************/
-enum PLAYER_SIGN                                      //用于标志Player的身份，玩家还是电脑，且有序号
+enum PLAYER_TYPE                                      //用于标志Player的身份，玩家还是电脑，且有序号
 	{Player_No = 0, Player_First = 1, Player_Second = 2, Player_Robot1 = 10, Player_Robot2 = 11, Player_Robot3 = 12};
 enum BUTTON_TYPE                                      //按键类型(按下了哪个按键)
-	{ Btn_Empty = 0, Btn_Start = 1 };
+	{Btn_Start = 0, Btn_Empty = 100};
 enum MOUSE_STATE                                      //鼠标标志位
-	{ Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2 }static Mouse_State;
+{Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
+enum CELL_TYPE { Cell_Empty = 0 };                    //格子的范围
 
 /********************************标志性全局变量(状态)部分**********************************************/
-static BOOL RUNGAME = 0;
-static BOOL LEAVEGAME = 0;
+extern BOOL RUNGAME;
+extern BOOL LEAVEGAME;
 
-static HANDLE hListenThread;
-static BOOL ListenThreadState = 1;     //用于特殊情形下暂停监听线程
+extern HANDLE hListenThread;
+extern BOOL ListenThreadState;   //用于特殊情形下暂停监听线程
 
 /*************************************全局变量部分*****************************************************/
 //界面设置
-static short ConsoleBufferWidth;
-static short ConsoleBufferHeight;
-static int WindowWidth;
-static int WindowHeight;
+extern short ConsoleBufferWidth;
+extern short ConsoleBufferHeight;
+extern int WindowWidth;
+extern int WindowHeight;
 
-static HWND hWnd;                    //窗口句柄
-//static HDC	 hdc;                 //设备句柄，保守起见，不设为全局变量，凡是涉及DC的都应慎重
-static HANDLE hOutput;               //窗口输出句柄
-static HANDLE hInput;                //窗口输入句柄
-static POINT mousePos;
+//句柄等
+extern HWND hWnd;                    //窗口句柄
+extern HDC	hdc;					//设备句柄
+extern HANDLE hOutput;               //窗口输出句柄
+extern HANDLE hInput;                //窗口输入句柄
+extern POINT mousePos;
 
 //画笔与画刷
 const static int ThinPen=2;
 const static int MiddlePen = 5;
 const static int ThickPen = 8;
-static HPEN hRedPen;
+extern HPEN hRedPen;
+
+//全局常量
+const static bool PAUSE = 0;
+const static bool RUN = 1;
+const static int ButtonCount = 1;
 
 /**************************************函数部分********************************************************/
 void createListenThread();
