@@ -26,6 +26,8 @@ GameEngine::GameEngine()
 	brushArr[RedBrush] = CreateSolidBrush(RGB(255, 0, 0));
 	brushArr[BlueBrush] = CreateSolidBrush(RGB(0, 0, 255));
 	brushArr[GreenBrush] = CreateSolidBrush(RGB(0, 255, 0));
+	brushArr[YellowBrush] = CreateSolidBrush(RGB(255, 255, 0));
+	brushArr[PinkBrush] = CreateSolidBrush(RGB(255, 0, 255));
 
 	createListenThread();
 

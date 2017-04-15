@@ -171,21 +171,29 @@ void EasyScene::drawPlayer()
 	hWnd = GetConsoleWindow();
 	hdc = GetDC(hWnd);
 	SelectObject(hdc, brushArr[BlueBrush]);
-
+	Brush brush = Brush(2);
 	for (int i = 0; i < playerManager->realPlayerCount; ++i)
+	{
+		SelectObject(hdc, brushArr[brush]);
+		brush = Brush(brush + 1);
 		Ellipse(hdc,
 			playerManager->realPlayerList[i].left,
 			playerManager->realPlayerList[i].top,
 			playerManager->realPlayerList[i].right,
 			playerManager->realPlayerList[i].bottom
 			);
+	}
 	for (int i = 0; i < playerManager->robotCount; ++i)
+	{
+		SelectObject(hdc, brushArr[brush]);
+		brush = Brush(brush + 1);
 		Ellipse(hdc,
 			playerManager->robotList[i].left,
 			playerManager->robotList[i].top,
 			playerManager->robotList[i].right,
 			playerManager->robotList[i].bottom
 			);
+	}
 	ReleaseDC(hWnd, hdc);
 }
 

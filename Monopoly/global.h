@@ -20,8 +20,8 @@ const static int MiddlePen = 5;
 const static int ThickPen = 8;
 
 enum Pen{WhiteThinPen=0,RedThinPen=1,BlueThinPen=2,GreenThinPen=3,YellowThinPen=4,PinkThinPen=5};
-enum Brush{WhiteBrush=0,BlackBrush=1,RedBrush=2,BlueBrush=3,GreenBrush=4};
-const static int penCount = 6;	const static int brushCount = 5;
+enum Brush{WhiteBrush=0,BlackBrush=1,RedBrush=2,BlueBrush=3,GreenBrush=4,YellowBrush=5,PinkBrush=6};
+const static int penCount = 6;	const static int brushCount = 7;
 extern HPEN penArr[penCount];	extern HBRUSH brushArr[brushCount]; //数字要与画笔、画刷数量对应，这是为数不多的硬编码了
 
 /********************************标志性全局变量(状态)部分**********************************************/
