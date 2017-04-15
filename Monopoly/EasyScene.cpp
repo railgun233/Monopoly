@@ -3,6 +3,7 @@ using std::fstream;
 
 EasyScene::EasyScene()
 {
+	cellManager = new CellManager(CellCount);
 	loadData();
 }
 
@@ -35,6 +36,17 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 	//关闭文件
 	input.close();
 
+	/*************************读取格子***********************/
+	input.open("data/EasySceneCell.txt", std::iostream::in);
+	while (input >> discard && (discard != '#'))
+		continue;
+	for (int i = 0; i < CellCount; ++i)             //将格子的数据导入CellManager
+	{
+		int left, top, right, bottom, price, master, celltype;
+		input >> left >> top >> right >> bottom >> price >> master >> celltype;
+		(cellManager->cellList[i]).changeValue(left, top, right, bottom, price, (PLAYER_TYPE)master, (CELL_TYPE)celltype);
+	}
+
 	/*************************数据对接*************************/
 	//按钮的创建，之所以不使用for循环而采用一个一个输入是有原因的
 	Button *button_start_ = new Button({ startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2 });
@@ -45,7 +57,10 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 
 	/**************************绘图前的准备********************************/
 	//载入画笔、画刷资源
+	hWhitePen = GetStockObject(WHITE_PEN);
 	hRedPen = CreatePen(PS_SOLID, ThinPen, RGB(255, 0, 0));
+	hBlackBrush = GetStockObject(BLACK_BRUSH);
+	hBlueBrush = CreateSolidBrush(RGB(0, 255, 0));
 }
 
 void EasyScene::paint()
@@ -66,6 +81,9 @@ void EasyScene::paint()
 
 	/******************************************按钮的绘制**********************************************/
 	drawButton();
+
+	/*******************************************绘制格子***********************************************/
+	drawCell();
 
 	ReleaseDC(hWnd, hdc);
 }
@@ -90,14 +108,21 @@ void EasyScene::MessageBar()
 
 void EasyScene::drawCell()
 {
-
+	hdc = GetDC(hWnd);
+	for (int i = 0; i < CellCount; ++i)             //不敢使用迭代器了，此前在Button处使用过，全线崩溃
+	{
+		Rectangle(hdc, cellManager->cellList[i].left, cellManager->cellList[i].top,
+			cellManager->cellList[i].right, cellManager->cellList[i].bottom);
+	}
 }
 
 void EasyScene::drawButton()
 {
 	hdc = GetDC(hWnd);
+	SelectObject(hdc, hWhitePen);
+	SelectObject(hdc, hBlackBrush);
 
-	auto fn=[&](Button *button){                //懒得想函数名，直接用lambda表达式
+	auto fn=[&](Button *button){                    //懒得想函数名，直接用lambda表达式
 		Rectangle(hdc, button->x1, button->y1, button->x2, button->y2);
 	};
 

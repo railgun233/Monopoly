@@ -35,7 +35,12 @@ void GameEngine::initialize()
 		continue;
 	input >> ConsoleBufferWidth >> ConsoleBufferHeight >> WindowWidth >> WindowHeight;
 
+	//读取EasyScene对应的CellCount的大小
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> CellCount;
 	input.close();
+
 	/********************************************操作部分**************************************************/
 	COORD bufferSize = { ConsoleBufferWidth,ConsoleBufferHeight };
 	SetConsoleScreenBufferSize(hOutput, bufferSize);                            //改变缓冲区大小

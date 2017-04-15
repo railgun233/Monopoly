@@ -5,15 +5,17 @@
 BOOL RUNGAME;	BOOL LEAVEGAME;
 //设置类全局变量
 short ConsoleBufferWidth;	short ConsoleBufferHeight;
-int WindowWidth;	int WindowHeight;
+int WindowWidth;	int WindowHeight;	int CellCount;
 //句柄全局变量
 HANDLE hListenThread;	BOOL ListenThreadState;
 HWND hWnd;	HDC	 hdc;
 HANDLE hOutput;	HANDLE hInput;
-HPEN hRedPen;
+HPEN hRedPen;	HGDIOBJ hWhitePen;
+HBRUSH hBlueBrush;	HGDIOBJ hBlackBrush;
 //一般全局变量
 POINT mousePos;		MOUSE_STATE Mouse_State;
-Button** ButtonList;	ButtonManager* buttonManager;	PlayerManager *playerManager;
+Button** ButtonList;	
+ButtonManager* buttonManager;	PlayerManager *playerManager;	EasyScene *easyScene;
 /*********************************************************************************************************************/
 
 int main()

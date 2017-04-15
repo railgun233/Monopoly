@@ -1,19 +1,18 @@
 //管理游戏角色与按钮，性质跟GameEngine差不多
+//一使用标准库的容器就出现各种毛病，索性全用动态数组来实现，还能提高点效率
 #pragma once
-#include<list>
-using std::list;
 #include"global.h"
 #include"Button.h"
+#include"Cell.h"
 
 class Player;
-class Cell;
 class EasyScene;
 
 class PlayerManager
 {
 public:
 	int playerCount;
-	list<Player*> existPlayerList;
+	Player* existPlayerList;
 };
 extern PlayerManager *playerManager;
 
@@ -32,10 +31,10 @@ extern ButtonManager* buttonManager;
 class CellManager
 {
 private:
-	list<Cell*> cellList;
+	Cell* cellList;
 
 public:
-	CellManager();
+	CellManager(int size);
 	~CellManager();
 
 	friend class EasyScene;

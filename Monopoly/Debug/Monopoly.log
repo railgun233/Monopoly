@@ -1,8 +1,16 @@
-﻿生成启动时间为 2017/4/14 23:41:33。
+﻿生成启动时间为 2017/4/15 8:39:47。
      1>项目“H:\GitStore\MyGit\Monopoly\Monopoly\Monopoly.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         H:\编译器\VS2015 community\VC\bin\CL.exe /c /IH:\C++library\EasyX\Include /IH:\boost\boost_1_63_0 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         H:\编译器\VS2015 community\VC\bin\CL.exe /c /IH:\C++library\EasyX\Include /IH:\boost\boost_1_63_0 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Cell.cpp EasyScene.cpp GameEngine.cpp Manager.cpp global.cpp main.cpp
          main.cpp
+         GameEngine.cpp
+         正在生成代码...
+         正在编译...
+         global.cpp
+         Manager.cpp
+         EasyScene.cpp
+         Cell.cpp
+         正在生成代码...
        Link:
          H:\编译器\VS2015 community\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.exe" /INCREMENTAL /NOLOGO /LIBPATH:H:\C++library\EasyX\lib2015 /LIBPATH:H:\C++library\EasyX\lib /LIBPATH:H:\boost\boost_1_63_0\libs kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.lib" /MACHINE:X86 Debug\Cell.obj
          Debug\EasyScene.obj
@@ -15,4 +23,4 @@
 
 已成功生成。
 
-已用时间 00:00:00.99
+已用时间 00:00:03.12

@@ -5,12 +5,12 @@
 
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE                                      //用于标志Player的身份，玩家还是电脑，且有序号
-	{Player_No = 0, Player_First = 1, Player_Second = 2, Player_Robot1 = 10, Player_Robot2 = 11, Player_Robot3 = 12};
+	{Player_Empty = 0, Player_First = 1, Player_Second = 2, Player_Robot1 = 10, Player_Robot2 = 11, Player_Robot3 = 12};
 enum BUTTON_TYPE                                      //按键类型(按下了哪个按键)
 	{Btn_Start = 0, Btn_Empty = 100};
 enum MOUSE_STATE                                      //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
-enum CELL_TYPE { Cell_Empty = 0 };                    //格子的范围
+enum CELL_TYPE { Cell_Empty = 0 };                    //格子的类型
 
 /********************************标志性全局变量(状态)部分**********************************************/
 extern BOOL RUNGAME;
@@ -37,13 +37,14 @@ extern POINT mousePos;
 const static int ThinPen=2;
 const static int MiddlePen = 5;
 const static int ThickPen = 8;
-extern HPEN hRedPen;
+extern HPEN hRedPen;	extern HGDIOBJ hWhitePen;
+extern HBRUSH hBlueBrush;	extern HGDIOBJ hBlackBrush;
 
 //全局常量
-const static bool PAUSE = 0;
-const static bool RUN = 1;
-const static int ButtonCount = 1;
-
+const bool PAUSE = 0;
+const bool RUN = 1;
+const int ButtonCount = 1;
+extern int CellCount;
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息

@@ -7,9 +7,6 @@ class Cell;
 
 class Scene
 {
-protected:
-	list<Cell*> cellList;
-
 public:
 	Scene(){}
 	~Scene(){}

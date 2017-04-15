@@ -43,12 +43,12 @@ BUTTON_TYPE ButtonManager::isButton()
 	return Btn_Empty;
 }
 
-CellManager::CellManager()
+CellManager::CellManager(int size)
 {
-
+	cellList = new Cell[size];
 }
 
 CellManager::~CellManager()
 {
-
+	delete cellList;
 }
