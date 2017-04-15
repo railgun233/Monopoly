@@ -3,7 +3,7 @@
 /***********************************若想了解变量的详情可前往global.h**************************************************/
 //标志性全局变量
 BOOL RUNGAME;	BOOL LEAVEGAME;		BOOL IF_SLEEP;	int SLEEP_TIME = 50;
-BOOL BEINGDICE;	BOOL REPAINT;	int DiceNumber;
+BOOL BEINGDICE;	BOOL REPAINT;	int DiceNumber;		PLAYER_TYPE nowPlayer;
 //设置类全局变量
 short ConsoleBufferWidth;	short ConsoleBufferHeight;	wchar_t ConsoleTitle[StringMaxLength];
 int WindowWidth;	int WindowHeight;	int CellCount; 
@@ -27,7 +27,7 @@ int main()
 	//在这个阶段要让玩家输入RealPlayerCount和robotPlayerCount，否则后续的构造不成功
 	RealPlayerCount = 1; robotPlayerCount = 3;
 
-	RUNGAME = 1; LEAVEGAME = 0; IF_SLEEP = 0;
+	RUNGAME = 1; LEAVEGAME = 0; IF_SLEEP = 0; nowPlayer=Player_First;
 
 	gameEngine = new GameEngine();                //这些类基本都是只能存在一个
 	ListenThreadState = PAUSE;

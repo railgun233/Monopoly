@@ -14,5 +14,4 @@ public:
 	virtual void loadData() = 0;
 	virtual void run() = 0;
 	virtual void paint() = 0;
-	virtual void loadPlayer() = 0;
 };

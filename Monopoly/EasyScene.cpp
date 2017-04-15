@@ -116,11 +116,11 @@ void EasyScene::run()            //´Ëº¯ÊýÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ð§¹û¶
 	RECT rect = { WindowWidth,WindowHeight };
 	while (RUNGAME)
 	{
-		if (REPAINT)                //½çÃæ²»¸Ä±äµÄÇé¿öÏÂ¾Í²»½øÐÐÖØ»æ£¬Òª½øÐÐÖØ»æ×î¶ÌÊ±¼äÒ²ÒªÓÐ50msµÄ¼ä¸ô
+		if (REPAINT)                //½çÃæ²»¸Ä±äµÄÇé¿öÏÂ¾Í²»½øÐÐÖØ»æ£¬Òª½øÐÐÖØ»æ×î¶ÌÊ±¼äÊÇdeltaTime
 		{
 			hdc = GetDC(hWnd);
 			FillRect(hdc, &rect, hClear);
-			Sleep(50);
+			Sleep(deltaTime);
 			paint();
 			ReleaseDC(hWnd, hdc);
 			REPAINT = FALSE;
@@ -129,14 +129,10 @@ void EasyScene::run()            //´Ëº¯ÊýÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ð§¹û¶
 		{
 			DiceNumber=playDice();
 			Sleep(1500);
-			REPAINT = TRUE;	BEINGDICE = FALSE;
+			movePlayer(DiceNumber, nowPlayer);
+			BEINGDICE = FALSE;
 		}
 	}
-}
-
-void EasyScene::loadPlayer()
-{
-
 }
 
 void EasyScene::MessageBar()
@@ -225,4 +221,35 @@ void EasyScene::drawPlayerInfoBar()
 		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
 		iY += 20;
 	}
+}
+
+void EasyScene::movePlayer(int n,PLAYER_TYPE type)
+{
+	hWnd = GetConsoleWindow();
+	HBRUSH hClear = CreateSolidBrush(RGB(0, 0, 0));
+	RECT rect = { WindowWidth,WindowHeight };
+	
+	auto fn=[&](Player* player){
+		for (int j = 0; j < n; ++j){
+			++(*player);
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			paint();
+			Sleep(deltaTime);
+		}
+	};
+
+	for (int i = 0; i < playerManager->realPlayerCount;++i)
+		if (playerManager->realPlayerList[i].sign == type)
+		{
+			fn(&(playerManager->realPlayerList[i]));
+			return;
+		}
+
+	for (int i = 0; i < playerManager->robotCount;++i)
+		if (playerManager->robotList[i].sign == type)
+		{
+			fn(&(playerManager->robotList[i]));
+			return;
+		}
 }

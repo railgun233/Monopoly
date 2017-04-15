@@ -20,4 +20,5 @@ public:
 	void updateData(MONEY newMoney) { money = newMoney; }
 
 	void moveTo(PLAYER_POS newPos);
+	void operator++();
 };

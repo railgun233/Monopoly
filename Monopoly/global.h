@@ -2,7 +2,7 @@
 //注意变量的声明方式，防止重定义
 #pragma once
 #include<Windows.h>
-
+const int deltaTime = 200;
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE                                      //用于标志Player的身份，玩家还是电脑，且有序号
 	{Player_robot1 = 0, Player_robot2 = 1, Player_robot3 = 2, Player_First = 8, Player_Second = 9,  Player_Empty = 100};
@@ -31,6 +31,7 @@ extern BOOL LEAVEGAME;
 extern HANDLE hListenThread;
 extern BOOL ListenThreadState;   //用于特殊情形下暂停监听线程
 
+extern PLAYER_TYPE nowPlayer;
 /*************************************全局变量部分*****************************************************/
 //界面设置
 extern short ConsoleBufferWidth;

@@ -33,3 +33,12 @@ void Player::moveTo(PLAYER_POS newPos)
 {
 	changeValue(name, sign, newPos, money);
 }
+
+void Player::operator++()
+{
+	if (pos < CellCount)
+		++pos;
+	else
+		pos = 0;
+	moveTo(pos);
+}
