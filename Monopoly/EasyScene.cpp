@@ -3,6 +3,8 @@
 #include"Cell.h"
 #include"Button.h"
 #include"Player.h"
+#include"RealPlayer.h"
+#include"Robot.h"
 
 using std::fstream;
 
@@ -37,6 +39,11 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 	while (input >> discard && (discard != '#'))
 		continue;
 	input >> line3_y >> line3_x1 >> line3_x2;
+
+	//读取玩家信息栏标题的初始坐标，文本的初始坐标
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> PlayerInfoBarTitle_x >> PlayerInfoBarTitle_y >> PlayerInfoBar_x >> PlayerInfoBar_y;
 
 	//读取第一个按钮:掷骰子按钮
 	while (input >> discard && (discard != '#'))
@@ -94,6 +101,36 @@ void EasyScene::paint()
 
 	/*******************************************绘制格子***********************************************/
 	drawCell();
+
+	/***************************************绘制玩家信息栏*******************************************/
+	char moneyNumber[10];
+	SetTextColor(hdc, RGB(255, 0, 0));
+	SetBkColor(hdc, RGB(0, 0, 0));
+
+	//绘制标题
+	TextOut(hdc, PlayerInfoBarTitle_x, PlayerInfoBarTitle_y, PlayerInfoBarTitle, wcslen(PlayerInfoBarTitle));
+
+	int iX = PlayerInfoBar_x, iY = PlayerInfoBar_y;
+	wchar_t text1[] = L"人类玩家"; wchar_t text2[] = L"电脑玩家";
+	for (int i = 0; i < playerManager->realPlayerCount; ++i)
+	{
+		_itoa((playerManager->realPlayerList)[i].money, moneyNumber, 10);    //10代表十进制
+		TextOut(hdc, iX, iY, text1, wcslen(text1));
+		TextOut(hdc, iX+80, iY,
+			((playerManager->realPlayerList)[i].name), wcslen(((playerManager->realPlayerList)[i].name)));
+		TextOutA(hdc, iX+150, iY, moneyNumber, strlen(moneyNumber));
+		iY += 20;
+	}
+
+	for (int i = 0; i < playerManager->robotCount; ++i)
+	{
+		_itoa((playerManager->robotList)[i].money, moneyNumber, 10);    //10代表十进制
+		TextOut(hdc, iX, iY, text2, wcslen(text2));
+		TextOut(hdc, iX + 80, iY,
+			((playerManager->robotList)[i].name), wcslen(((playerManager->robotList)[i].name)));
+		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
+		iY += 20;
+	}
 
 	ReleaseDC(hWnd, hdc);
 }

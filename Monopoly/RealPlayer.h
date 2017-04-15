@@ -2,7 +2,7 @@
 #pragma once
 #include"Player.h"
 
-class RealPlayer:Player
+class RealPlayer:public Player
 {
 public:
 	RealPlayer() :Player(){}

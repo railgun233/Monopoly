@@ -6,20 +6,22 @@
 class EasyScene;
 class Cell;
 class RealPlayer;
-class Robbot;
+class robot;
 
 class PlayerManager
 {
 public:
 	int playerCount;
 	int realPlayerCount;
-	int robbotCount;
+	int robotCount;
 
 	RealPlayer* realPlayerList;
-	Robbot* robbotList;
+	robot* robotList;
 
-	PlayerManager(int realPlayerCount_, int robbotPlayerCount_);
+	PlayerManager(int realPlayerCount_, int robotPlayerCount_);
 	~PlayerManager();
+
+	void createPlayer();
 };
 extern PlayerManager *playerManager;
 
@@ -47,5 +49,5 @@ public:
 	friend class EasyScene;
 	friend class Player;
 	friend class RealPlayer;
-	friend class Robbot;
+	friend class robot;
 };

@@ -16,7 +16,7 @@ Player::Player(wchar_t * name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_
 
 void Player::changeValue(wchar_t * name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_)
 {
-	wcscat(name, name_);
+	wcscpy(name, name_);
 	sign = sign_; money = money_;
 	if (pos != pos_)
 	{

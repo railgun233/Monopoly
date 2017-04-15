@@ -6,7 +6,8 @@ BOOL RUNGAME;	BOOL LEAVEGAME;
 //设置类全局变量
 short ConsoleBufferWidth;	short ConsoleBufferHeight;	wchar_t ConsoleTitle[StringMaxLength];
 int WindowWidth;	int WindowHeight;	int CellCount; 
-int RealPlayerCount;	int RobbotPlayerCount;
+int RealPlayerCount;	int robotPlayerCount;	int initialMoney;
+wchar_t PlayerName[MaxPlayerCount][StringMaxLength];
 //句柄全局变量
 HANDLE hListenThread;	BOOL ListenThreadState;
 HWND hWnd;	HDC	 hdc;
@@ -22,7 +23,8 @@ ButtonManager* buttonManager;	PlayerManager *playerManager;	EasyScene *easyScene
 int main()
 {
 	//开始游戏界面
-	//在这个阶段要让玩家输入RealPlayerCount和RobbotPlayerCount，否则后续的构造不成功
+	//在这个阶段要让玩家输入RealPlayerCount和robotPlayerCount，否则后续的构造不成功
+	RealPlayerCount = 1; robotPlayerCount = 3;
 
 	RUNGAME = 1; LEAVEGAME = 0;
 
@@ -30,9 +32,10 @@ int main()
 	ListenThreadState = PAUSE;
 	gameEngine->initialize();                     //先暂停监听线程
 
-	buttonManager = new ButtonManager();
+	buttonManager = new ButtonManager();          //严格来讲它的声明位置是无关紧要的
+	easyScene = new EasyScene();
+	playerManager = new PlayerManager(RealPlayerCount, robotPlayerCount);    //要在easyScene之后声明,但要在绘图之前
 
-	easyScene = new EasyScene();                  //Scene类必须在Manager类的后面构造
 	ListenThreadState = RUN;
 
 	while (!LEAVEGAME)

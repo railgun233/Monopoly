@@ -3,7 +3,7 @@
 #include"Cell.h"
 #include"Player.h"
 #include"RealPlayer.h"
-#include"Robbot.h"
+#include"Robot.h"
 
 void ButtonManager::getMessage()
 {
@@ -18,7 +18,7 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 	{
 	case Btn_Start:
 		{
-			HDC hdc = GetDC(hWnd);
+			hdc = GetDC(hWnd);
 			Ellipse(hdc, 50, 50, 100, 100);
 			ReleaseDC(hWnd, hdc);
 		}
@@ -46,16 +46,31 @@ CellManager::~CellManager()
 	delete cellList;
 }
 
-PlayerManager::PlayerManager(int realPlayerCount_, int robbotPlayerCount_)
+PlayerManager::PlayerManager(int realPlayerCount_, int robotPlayerCount_)
 {
-	playerCount = realPlayerCount_ + robbotPlayerCount_;
+	playerCount = realPlayerCount_ + robotPlayerCount_;
 	realPlayerCount = realPlayerCount_;
-	robbotCount = robbotPlayerCount_;
+	robotCount = robotPlayerCount_;
 	realPlayerList = new RealPlayer[realPlayerCount_];
-	robbotList = new Robbot[robbotPlayerCount_];
+	robotList = new robot[robotPlayerCount_];
+
+	createPlayer();
 }
 
 PlayerManager::~PlayerManager()
 {
-	delete[] realPlayerList; delete[]robbotList;
+	delete[] realPlayerList; delete[]robotList;
+}
+
+void PlayerManager::createPlayer()
+{
+	//电脑玩家
+	int j = Player_robot1;
+	for (int i = 0; i < robotCount; ++i)
+		robotList[i].changeValue(PlayerName[j+i], PLAYER_TYPE(j+i), 0, initialMoney);
+
+	//人类玩家
+	j = Player_First;
+	for (int i =0; i < realPlayerCount; ++i)
+		realPlayerList[i].changeValue(PlayerName[j+i], PLAYER_TYPE(j+i), 0, initialMoney);
 }

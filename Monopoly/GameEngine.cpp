@@ -43,6 +43,11 @@ void GameEngine::initialize()
 		continue;
 	input >> CellCount;
 
+	//读取初始金钱
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> initialMoney;
+
 	input.close();
 	/****************************************宽字符读取部分**************************************************/
 	wchar_t wdiscard;
@@ -54,6 +59,16 @@ void GameEngine::initialize()
 		continue;
 	winput >> ConsoleTitle;
 
+	winput.close();
+
+	/*********************************读取人物名*********************************************/
+	winput.open("data/PlayerName.txt");
+	winput.imbue(std::locale("chs"));
+	while (winput >> wdiscard && (wdiscard != '#'))
+		continue;
+
+	for (int i = 0; i < MaxPlayerCount; ++i)
+		winput >> PlayerName[i];
 	winput.close();
 	/********************************************操作部分**************************************************/
 	SetConsoleTitle(ConsoleTitle);

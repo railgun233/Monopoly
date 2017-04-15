@@ -7,5 +7,5 @@
 #include"Manager.h"
 #include"Player.h"
 #include"RealPlayer.h"
-#include"Robbot.h"
+#include"robot.h"
 #include"GameEngine.h"

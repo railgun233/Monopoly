@@ -5,7 +5,7 @@
 
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE                                      //用于标志Player的身份，玩家还是电脑，且有序号
-	{Player_Empty = 0, Player_First = 1, Player_Second = 2, Player_Robot1 = 10, Player_Robot2 = 11, Player_Robot3 = 12};
+	{Player_robot1 = 0, Player_robot2 = 1, Player_robot3 = 2, Player_First = 8, Player_Second = 9,  Player_Empty = 100};
 enum BUTTON_TYPE                                      //按键类型(按下了哪个按键)
 	{Btn_Start = 0, Btn_Empty = 100};
 enum MOUSE_STATE                                      //鼠标标志位
@@ -44,13 +44,16 @@ extern HBRUSH hBlueBrush;	extern HGDIOBJ hBlackBrush;
 //全局常量
 const bool PAUSE = 0;
 const bool RUN = 1;
-const int ButtonCount = 1;                             //按钮的数量
-const int MaxPlayerCount = 10;
-const int StringMaxLength = 32;                        //最大字符串长度，包括标题和角色名
-const int SpaceBetweenPlayerAndCell = 10;              //玩家在格子上的空隙
-extern wchar_t ConsoleTitle[StringMaxLength];          //控制台窗口标题
-extern int CellCount;                                  //格子的数量
+const int ButtonCount = 1;										//按钮的数量
+const int MaxPlayerCount = 10;									//最大玩家数量
+const int StringMaxLength = 32;									//最大字符串长度，包括标题和角色名
+const int SpaceBetweenPlayerAndCell = 10;						//玩家在格子上的空隙
+extern wchar_t ConsoleTitle[StringMaxLength];					//控制台窗口标题
+extern int CellCount;											//格子的数量
+extern wchar_t PlayerName[MaxPlayerCount][StringMaxLength];     //玩家的名字
+extern int initialMoney;                                        //初始金钱
 
+const wchar_t PlayerInfoBarTitle[] = L"玩家信息";
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息
