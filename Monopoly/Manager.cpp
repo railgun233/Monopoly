@@ -17,11 +17,7 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 	switch (button)
 	{
 	case Btn_Start:
-		{
-			hdc = GetDC(hWnd);
-			Ellipse(hdc, 50, 50, 100, 100);
-			ReleaseDC(hWnd, hdc);
-		}
+		BEINGDICE = TRUE;
 		break;
 	default:
 		break;

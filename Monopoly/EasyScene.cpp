@@ -1,3 +1,4 @@
+#include"global.h"
 #include "EasyScene.h"
 #include"Manager.h"
 #include"Cell.h"
@@ -12,6 +13,7 @@ EasyScene::EasyScene()
 {
 	cellManager = new CellManager(CellCount);
 	loadData();
+	REPAINT = FALSE;
 }
 
 EasyScene::~EasyScene()
@@ -71,13 +73,6 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 	{
 		button_start_
 	};
-
-	/**************************绘图前的准备********************************/
-	//载入画笔、画刷资源
-	hWhitePen = GetStockObject(WHITE_PEN);
-	hRedPen = CreatePen(PS_SOLID, ThinPen, RGB(255, 0, 0));
-	hBlackBrush = GetStockObject(BLACK_BRUSH);
-	hBlueBrush = CreateSolidBrush(RGB(0, 255, 0));
 }
 
 void EasyScene::paint()
@@ -86,7 +81,7 @@ void EasyScene::paint()
 	POINT point;
 	/****************************************静止部分的绘制*******************************************/
 	//绘制左右栏分隔线
-	SelectObject(hdc, hRedPen);
+	SelectObject(hdc, penArr[PinkThinPen]);
 	MoveToEx(hdc, line1_x, line1_y1, &point);
 	LineTo(hdc, line1_x, line1_y2);
 	//绘制消息栏与游戏界面的分隔线
@@ -102,45 +97,41 @@ void EasyScene::paint()
 	/*******************************************绘制格子***********************************************/
 	drawCell();
 
+	/****************************************绘制骰子框***********************************************/
+	Rectangle(hdc, DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2);
+
+	/****************************************绘制玩家************************************************/
+	drawPlayer();
+
 	/***************************************绘制玩家信息栏*******************************************/
-	char moneyNumber[10];
-	SetTextColor(hdc, RGB(255, 0, 0));
-	SetBkColor(hdc, RGB(0, 0, 0));
-
-	//绘制标题
-	TextOut(hdc, PlayerInfoBarTitle_x, PlayerInfoBarTitle_y, PlayerInfoBarTitle, wcslen(PlayerInfoBarTitle));
-
-	int iX = PlayerInfoBar_x, iY = PlayerInfoBar_y;
-	wchar_t text1[] = L"人类玩家"; wchar_t text2[] = L"电脑玩家";
-	for (int i = 0; i < playerManager->realPlayerCount; ++i)
-	{
-		_itoa((playerManager->realPlayerList)[i].money, moneyNumber, 10);    //10代表十进制
-		TextOut(hdc, iX, iY, text1, wcslen(text1));
-		TextOut(hdc, iX+80, iY,
-			((playerManager->realPlayerList)[i].name), wcslen(((playerManager->realPlayerList)[i].name)));
-		TextOutA(hdc, iX+150, iY, moneyNumber, strlen(moneyNumber));
-		iY += 20;
-	}
-
-	for (int i = 0; i < playerManager->robotCount; ++i)
-	{
-		_itoa((playerManager->robotList)[i].money, moneyNumber, 10);    //10代表十进制
-		TextOut(hdc, iX, iY, text2, wcslen(text2));
-		TextOut(hdc, iX + 80, iY,
-			((playerManager->robotList)[i].name), wcslen(((playerManager->robotList)[i].name)));
-		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
-		iY += 20;
-	}
+	drawPlayerInfoBar();
 
 	ReleaseDC(hWnd, hdc);
 }
 
-void EasyScene::run()
+void EasyScene::run()            //此函数内的代码很大部分都只是为了测试动态效果而写，需重写
 {
-	hWnd = GetConsoleWindow();
 	paint();
+	HBRUSH hClear = CreateSolidBrush(RGB(0, 0, 0));
+	RECT rect = { WindowWidth,WindowHeight };
 	while (RUNGAME)
-		;
+	{
+		if (REPAINT)                //界面不改变的情况下就不进行重绘，要进行重绘最短时间也要有50ms的间隔
+		{
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			Sleep(50);
+			paint();
+			ReleaseDC(hWnd, hdc);
+			REPAINT = FALSE;
+		}
+		if (BEINGDICE)
+		{
+			DiceNumber=playDice();
+			Sleep(1500);
+			REPAINT = TRUE;	BEINGDICE = FALSE;
+		}
+	}
 }
 
 void EasyScene::loadPlayer()
@@ -161,13 +152,14 @@ void EasyScene::drawCell()
 		Rectangle(hdc, cellManager->cellList[i].left, cellManager->cellList[i].top,
 			cellManager->cellList[i].right, cellManager->cellList[i].bottom);
 	}
+	ReleaseDC(hWnd, hdc);
 }
 
 void EasyScene::drawButton()
 {
 	hdc = GetDC(hWnd);
-	SelectObject(hdc, hWhitePen);
-	SelectObject(hdc, hBlackBrush);
+	SelectObject(hdc, penArr[WhiteThinPen]);
+	SelectObject(hdc, brushArr[BlackBrush]);
 
 	auto fn=[&](Button *button){                    //懒得想函数名，直接用lambda表达式
 		Rectangle(hdc, button->x1, button->y1, button->x2, button->y2);
@@ -176,4 +168,61 @@ void EasyScene::drawButton()
 	for (int i = 0; i < ButtonCount; ++i)
 		fn(ButtonList[i]);
 	ReleaseDC(hWnd, hdc);
+}
+
+void EasyScene::drawPlayer()
+{
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+	SelectObject(hdc, brushArr[BlueBrush]);
+
+	for (int i = 0; i < playerManager->realPlayerCount; ++i)
+		Ellipse(hdc,
+			playerManager->realPlayerList[i].left,
+			playerManager->realPlayerList[i].top,
+			playerManager->realPlayerList[i].right,
+			playerManager->realPlayerList[i].bottom
+			);
+	for (int i = 0; i < playerManager->robotCount; ++i)
+		Ellipse(hdc,
+			playerManager->robotList[i].left,
+			playerManager->robotList[i].top,
+			playerManager->robotList[i].right,
+			playerManager->robotList[i].bottom
+			);
+	ReleaseDC(hWnd, hdc);
+}
+
+void EasyScene::drawPlayerInfoBar()
+{
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+	char moneyNumber[10];
+	SetTextColor(hdc, RGB(255, 0, 0));
+	SetBkColor(hdc, RGB(0, 0, 0));
+
+	//绘制标题
+	TextOut(hdc, PlayerInfoBarTitle_x, PlayerInfoBarTitle_y, PlayerInfoBarTitle, wcslen(PlayerInfoBarTitle));
+
+	int iX = PlayerInfoBar_x, iY = PlayerInfoBar_y;
+	wchar_t text1[] = L"人类玩家"; wchar_t text2[] = L"电脑玩家";
+	for (int i = 0; i < playerManager->realPlayerCount; ++i)       //人类玩家
+	{
+		_itoa((playerManager->realPlayerList)[i].money, moneyNumber, 10);    //10代表十进制
+		TextOut(hdc, iX, iY, text1, wcslen(text1));
+		TextOut(hdc, iX + 80, iY,
+			((playerManager->realPlayerList)[i].name), wcslen(((playerManager->realPlayerList)[i].name)));
+		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
+		iY += 20;
+	}
+
+	for (int i = 0; i < playerManager->robotCount; ++i)            //机器人玩家
+	{
+		_itoa((playerManager->robotList)[i].money, moneyNumber, 10);
+		TextOut(hdc, iX, iY, text2, wcslen(text2));
+		TextOut(hdc, iX + 80, iY,
+			((playerManager->robotList)[i].name), wcslen(((playerManager->robotList)[i].name)));
+		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
+		iY += 20;
+	}
 }

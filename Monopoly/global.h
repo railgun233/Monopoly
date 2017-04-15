@@ -13,6 +13,17 @@ enum MOUSE_STATE                                      //鼠标标志位
 enum CELL_TYPE { Cell_Empty = 0 };                    //格子的类型
 typedef int PLAYER_POS;                                //标记Player在哪个格子上
 typedef int MONEY;
+
+//画笔、画刷资源定义
+const static int ThinPen = 2;
+const static int MiddlePen = 5;
+const static int ThickPen = 8;
+
+enum Pen{WhiteThinPen=0,RedThinPen=1,BlueThinPen=2,GreenThinPen=3,YellowThinPen=4,PinkThinPen=5};
+enum Brush{WhiteBrush=0,BlackBrush=1,RedBrush=2,BlueBrush=3,GreenBrush=4};
+const static int penCount = 6;	const static int brushCount = 5;
+extern HPEN penArr[penCount];	extern HBRUSH brushArr[brushCount]; //数字要与画笔、画刷数量对应，这是为数不多的硬编码了
+
 /********************************标志性全局变量(状态)部分**********************************************/
 extern BOOL RUNGAME;
 extern BOOL LEAVEGAME;
@@ -34,13 +45,6 @@ extern HANDLE hOutput;               //窗口输出句柄
 extern HANDLE hInput;                //窗口输入句柄
 extern POINT mousePos;
 
-//画笔与画刷
-const static int ThinPen=2;
-const static int MiddlePen = 5;
-const static int ThickPen = 8;
-extern HPEN hRedPen;	extern HGDIOBJ hWhitePen;
-extern HBRUSH hBlueBrush;	extern HGDIOBJ hBlackBrush;
-
 //全局常量
 const bool PAUSE = 0;
 const bool RUN = 1;
@@ -52,9 +56,13 @@ extern wchar_t ConsoleTitle[StringMaxLength];					//控制台窗口标题
 extern int CellCount;											//格子的数量
 extern wchar_t PlayerName[MaxPlayerCount][StringMaxLength];     //玩家的名字
 extern int initialMoney;                                        //初始金钱
-
+extern int DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2;      //掷骰子框的位置
 const wchar_t PlayerInfoBarTitle[] = L"玩家信息";
+
+extern BOOL IF_SLEEP;	extern int SLEEP_TIME;        //这两个参数作为线程控制主线程的绘画程序是否休眠的关键
+extern BOOL BEINGDICE;		extern BOOL REPAINT;	extern int DiceNumber;
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息
 void hideCursor();                                 //隐藏光标
+int playDice();

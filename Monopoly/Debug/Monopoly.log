@@ -1,12 +1,27 @@
-﻿生成启动时间为 2017/4/15 15:03:48。
+﻿生成启动时间为 2017/4/16 0:04:46。
      1>项目“H:\GitStore\MyGit\Monopoly\Monopoly\Monopoly.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         H:\编译器\VS2015 community\VC\bin\CL.exe /c /IH:\C++library\EasyX\Include /IH:\boost\boost_1_63_0 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt EasyScene.cpp
+         H:\编译器\VS2015 community\VC\bin\CL.exe /c /IH:\C++library\EasyX\Include /IH:\boost\boost_1_63_0 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Cell.cpp EasyScene.cpp GameEngine.cpp Manager.cpp Player.cpp global.cpp main.cpp
+         main.cpp
+         Manager.cpp
          EasyScene.cpp
-     1>h:\gitstore\mygit\monopoly\monopoly\easyscene.cpp(117): warning C4996: '_itoa': This function or variable may be unsafe. Consider using _itoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>h:\gitstore\mygit\monopoly\monopoly\easyscene.cpp(211): warning C4996: '_itoa': This function or variable may be unsafe. Consider using _itoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
          c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdlib.h(637): note: 参见“_itoa”的声明
-     1>h:\gitstore\mygit\monopoly\monopoly\easyscene.cpp(127): warning C4996: '_itoa': This function or variable may be unsafe. Consider using _itoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>h:\gitstore\mygit\monopoly\monopoly\easyscene.cpp(221): warning C4996: '_itoa': This function or variable may be unsafe. Consider using _itoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
          c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdlib.h(637): note: 参见“_itoa”的声明
+         正在生成代码...
+         正在编译...
+         global.cpp
+     1>h:\gitstore\mygit\monopoly\monopoly\global.cpp(50): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdlib.h(1316): note: 参见“itoa”的声明
+         Player.cpp
+     1>h:\gitstore\mygit\monopoly\monopoly\player.cpp(8): warning C4996: 'wcscat': This function or variable may be unsafe. Consider using wcscat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\corecrt_wstring.h(101): note: 参见“wcscat”的声明
+     1>h:\gitstore\mygit\monopoly\monopoly\player.cpp(19): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\corecrt_wstring.h(121): note: 参见“wcscpy”的声明
+         GameEngine.cpp
+         Cell.cpp
+         正在生成代码...
        Link:
          H:\编译器\VS2015 community\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.exe" /INCREMENTAL /NOLOGO /LIBPATH:H:\C++library\EasyX\lib2015 /LIBPATH:H:\C++library\EasyX\lib /LIBPATH:H:\boost\boost_1_63_0\libs kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\GitStore\MyGit\Monopoly\Debug\Monopoly.lib" /MACHINE:X86 Debug\Cell.obj
          Debug\EasyScene.obj
@@ -20,4 +35,4 @@
 
 已成功生成。
 
-已用时间 00:00:00.99
+已用时间 00:00:03.75

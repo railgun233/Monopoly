@@ -18,7 +18,8 @@ void Player::changeValue(wchar_t * name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MO
 {
 	wcscpy(name, name_);
 	sign = sign_; money = money_;
-	if (pos != pos_)
+
+	if (pos_ != -1)
 	{
 		pos = pos_;
 		left = easyScene->cellManager->cellList[pos].left + SpaceBetweenPlayerAndCell;
@@ -26,4 +27,9 @@ void Player::changeValue(wchar_t * name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MO
 		right = easyScene->cellManager->cellList[pos].right - SpaceBetweenPlayerAndCell;
 		bottom = easyScene->cellManager->cellList[pos].bottom - SpaceBetweenPlayerAndCell;
 	}
+}
+
+void Player::moveTo(PLAYER_POS newPos)
+{
+	changeValue(name, sign, newPos, money);
 }

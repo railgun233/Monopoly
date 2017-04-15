@@ -13,6 +13,20 @@ GameEngine::GameEngine()
 	hInput = GetStdHandle(STD_INPUT_HANDLE);
 	GetCursorPos(&mousePos);                       //时刻牢记使用mousePos前要先转为客户区坐标
 
+	/**********************************将画刷、画笔资源初始化*******************************/
+	penArr[WhiteThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(255, 255, 255));
+	penArr[RedThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(255, 0, 0));
+	penArr[BlueThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(0, 0, 255));
+	penArr[GreenThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(0, 255, 0));
+	penArr[YellowThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(255, 255, 0));
+	penArr[PinkThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(255, 0, 255));
+
+	brushArr[WhiteBrush] = CreateSolidBrush(RGB(255, 255, 255));
+	brushArr[BlackBrush] = CreateSolidBrush(RGB(0, 0, 0));
+	brushArr[RedBrush] = CreateSolidBrush(RGB(255, 0, 0));
+	brushArr[BlueBrush] = CreateSolidBrush(RGB(0, 0, 255));
+	brushArr[GreenBrush] = CreateSolidBrush(RGB(0, 255, 0));
+
 	createListenThread();
 
 	//隐藏光标
@@ -47,6 +61,11 @@ void GameEngine::initialize()
 	while (input >> discard && (discard != '#'))
 		continue;
 	input >> initialMoney;
+
+	//读取掷骰子的框的位置
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> DiceBox_x1 >> DiceBox_y1 >> DiceBox_x2 >> DiceBox_y2;
 
 	input.close();
 	/****************************************宽字符读取部分**************************************************/

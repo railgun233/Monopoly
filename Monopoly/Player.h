@@ -16,8 +16,8 @@ public:
 	Player(wchar_t* name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_);
 	~Player(){}
 
-	void changeValue(wchar_t* name_,PLAYER_TYPE sign_,PLAYER_POS pos_,MONEY money);
+	void changeValue(wchar_t* name_,PLAYER_TYPE sign_,PLAYER_POS pos_,MONEY money); //当不需要改变位置时pos_传值为-1
 	void updateData(MONEY newMoney) { money = newMoney; }
 
-	virtual void moveTo(PLAYER_POS newPos){}
+	void moveTo(PLAYER_POS newPos);
 };

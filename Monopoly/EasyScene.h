@@ -24,8 +24,11 @@ public:
 
 	void paint();                                     //绘制界面
 	void MessageBar();                                //用于绘制消息栏，显示各个玩家的实时消息
+
 	void drawCell();
 	void drawButton();
+	void drawPlayer();
+	void drawPlayerInfoBar();
 
 	void run();                                       //运行
 };

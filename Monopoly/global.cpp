@@ -40,3 +40,16 @@ void hideCursor()
 	CONSOLE_CURSOR_INFO cursorInfo = {1,FALSE};
 	SetConsoleCursorInfo(hOutput, &cursorInfo);
 }
+
+int playDice()
+{
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+	int diceNumber = rand() % 4 + rand()%4;
+	char text[2];
+	itoa(diceNumber,text,10);
+	SetTextColor(hdc, RGB(255, 0, 0));
+	TextOutA(hdc, DiceBox_x1+20, DiceBox_y2-20,text,2);
+	int i = GetLastError();
+	return diceNumber;
+}
