@@ -1,6 +1,9 @@
 #include "GameEngine.h"
+#include"EasyScene.h"
+#include"Manager.h"
 #include<fstream>
-using std::fstream;
+using std::ifstream;
+using std::wifstream;
 
 GameEngine::GameEngine()
 {
@@ -28,7 +31,7 @@ void GameEngine::initialize()
 {
 	/*****************************************读取数据部分**************************************************/
 	char discard;                                 //虽然有读取到中文字符但应该无关紧要
-	fstream input("data/GameEngineData.txt");
+	ifstream input("data/GameEngineData.txt");
 
 	//读取窗口缓冲区大小与窗口大小
 	while (input >> discard && (discard != '#'))
@@ -39,9 +42,21 @@ void GameEngine::initialize()
 	while (input >> discard && (discard != '#'))
 		continue;
 	input >> CellCount;
-	input.close();
 
+	input.close();
+	/****************************************宽字符读取部分**************************************************/
+	wchar_t wdiscard;
+	wifstream winput("data/ChineseString.txt");
+	winput.imbue(std::locale("chs"));
+	
+	//读取控制台的标题
+	while (winput >> wdiscard && (wdiscard != '#'))
+		continue;
+	winput >> ConsoleTitle;
+
+	winput.close();
 	/********************************************操作部分**************************************************/
+	SetConsoleTitle(ConsoleTitle);
 	COORD bufferSize = { ConsoleBufferWidth,ConsoleBufferHeight };
 	SetConsoleScreenBufferSize(hOutput, bufferSize);                            //改变缓冲区大小
 	SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, WindowWidth, WindowHeight, NULL);    //改变窗口大小

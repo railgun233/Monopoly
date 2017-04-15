@@ -1,0 +1,11 @@
+#pragma once
+#include"global.h"
+#include"Button.h"
+#include"Cell.h"
+#include"Scene.h"
+#include"EasyScene.h"
+#include"Manager.h"
+#include"Player.h"
+#include"RealPlayer.h"
+#include"Robbot.h"
+#include"GameEngine.h"

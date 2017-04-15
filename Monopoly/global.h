@@ -11,7 +11,8 @@ enum BUTTON_TYPE                                      //按键类型(按下了哪个按键)
 enum MOUSE_STATE                                      //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
 enum CELL_TYPE { Cell_Empty = 0 };                    //格子的类型
-
+typedef int PLAYER_POS;                                //标记Player在哪个格子上
+typedef int MONEY;
 /********************************标志性全局变量(状态)部分**********************************************/
 extern BOOL RUNGAME;
 extern BOOL LEAVEGAME;
@@ -43,8 +44,13 @@ extern HBRUSH hBlueBrush;	extern HGDIOBJ hBlackBrush;
 //全局常量
 const bool PAUSE = 0;
 const bool RUN = 1;
-const int ButtonCount = 1;
-extern int CellCount;
+const int ButtonCount = 1;                             //按钮的数量
+const int MaxPlayerCount = 10;
+const int StringMaxLength = 32;                        //最大字符串长度，包括标题和角色名
+const int SpaceBetweenPlayerAndCell = 10;              //玩家在格子上的空隙
+extern wchar_t ConsoleTitle[StringMaxLength];          //控制台窗口标题
+extern int CellCount;                                  //格子的数量
+
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息

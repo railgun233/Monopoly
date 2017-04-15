@@ -4,11 +4,11 @@
 class Robbot:Player
 {
 public:
-	Robbot();
-	~Robbot();
+	Robbot() :Player() {}
+	Robbot(wchar_t* name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_)
+		: Player(name_, sign_, pos_, money_) {}
+	~Robbot(){}
 
-	virtual void moveTo();
-	virtual void updateData();
-	virtual void getMoney();
-	void decide();
+	void moveTo(PLAYER_POS newPos) {}
+	void decide(){}
 };

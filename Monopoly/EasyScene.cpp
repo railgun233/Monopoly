@@ -1,10 +1,20 @@
 #include "EasyScene.h"
+#include"Manager.h"
+#include"Cell.h"
+#include"Button.h"
+#include"Player.h"
+
 using std::fstream;
 
 EasyScene::EasyScene()
 {
 	cellManager = new CellManager(CellCount);
 	loadData();
+}
+
+EasyScene::~EasyScene()
+{
+	delete[]cellManager;
 }
 
 void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我们的文本包含太多垃圾数据的情况下

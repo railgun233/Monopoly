@@ -2,8 +2,7 @@
 #pragma once
 #include<fstream>
 #include"Scene.h"
-#include"Manager.h"
-#include"Cell.h"
+class CellManager;
 
 class EasyScene:public Scene
 {
@@ -13,10 +12,10 @@ private:
 	int line3_y, line3_x1, line3_x2;                                      //line3为右栏里按钮栏和玩家栏的分隔线
 	int startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2;               //开始按钮
 
-	CellManager *cellManager;
 public:
+	CellManager *cellManager;
 	EasyScene();
-	~EasyScene() { delete cellManager; }
+	~EasyScene();
 
 	void loadData();                                  //所有Cell的数据也是在这里导入
 	void loadPlayer();                                //载入玩家数据

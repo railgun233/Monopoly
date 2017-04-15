@@ -1,14 +1,9 @@
 #include "Manager.h"
-
-ButtonManager::ButtonManager()
-{
-
-}
-
-ButtonManager::~ButtonManager()
-{
-
-}
+#include"Button.h"
+#include"Cell.h"
+#include"Player.h"
+#include"RealPlayer.h"
+#include"Robbot.h"
 
 void ButtonManager::getMessage()
 {
@@ -27,8 +22,6 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 			Ellipse(hdc, 50, 50, 100, 100);
 			ReleaseDC(hWnd, hdc);
 		}
-		break;
-	case Btn_Empty:
 		break;
 	default:
 		break;
@@ -51,4 +44,18 @@ CellManager::CellManager(int size)
 CellManager::~CellManager()
 {
 	delete cellList;
+}
+
+PlayerManager::PlayerManager(int realPlayerCount_, int robbotPlayerCount_)
+{
+	playerCount = realPlayerCount_ + robbotPlayerCount_;
+	realPlayerCount = realPlayerCount_;
+	robbotCount = robbotPlayerCount_;
+	realPlayerList = new RealPlayer[realPlayerCount_];
+	robbotList = new Robbot[robbotPlayerCount_];
+}
+
+PlayerManager::~PlayerManager()
+{
+	delete[] realPlayerList; delete[]robbotList;
 }
