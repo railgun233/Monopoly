@@ -2,7 +2,7 @@
 #include"Manager.h"
 #include<ctime>
 deque<wchar_t*> messageList;
-const int MessageCount = 4;	int nowMessageCount;
+int nowMessageCount;
 
 void createListenThread()
 {
@@ -52,7 +52,11 @@ int playDice()
 	int diceNumber = rand() % 4 + rand()%3+1;
 	char text[2];
 	itoa(diceNumber,text,10);
-	SetTextColor(hdc, RGB(255, 0, 0));                   //文本设置成红色
+
+	SetTextColor(hdc, RGB(255, 0, 255));          //设置文本颜色、背景色、大小
+	SetBkColor(hdc, RGB(0, 0, 0));
+	SelectObject(hdc, fontArr[fontSize_50]);
+
 	TextOutA(hdc, DicePos_x, DicePos_y-20,text,2);
 	return diceNumber;
 }

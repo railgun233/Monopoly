@@ -57,26 +57,38 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 		continue;
 	input >> startBtn_x1 >> startBtn_y1 >> startBtn_x2 >> startBtn_y2;
 
+	//读取第二个按钮:购买按钮
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> buyBtn_x1 >> buyBtn_y1 >> buyBtn_x2 >> buyBtn_y2;
+
 	//关闭文件
 	input.close();
 
 	/*************************读取格子***********************/
 	input.open("data/EasySceneCell.txt", std::iostream::in);
+
+	//读取格子的不同价钱
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> cellPrice[ExpensivePrice] >> cellPrice[NormalPrice] >> cellPrice[CheapPrice];
+
 	while (input >> discard && (discard != '#'))
 		continue;
 	for (int i = 0; i < CellCount; ++i)             //将格子的数据导入CellManager
 	{
-		int left, top, right, bottom, price, master, celltype;
-		input >> left >> top >> right >> bottom >> price >> master >> celltype;
-		(cellManager->cellList[i]).changeValue(left, top, right, bottom, price, (PLAYER_TYPE)master, (CELL_TYPE)celltype);
+		int left, top, right, bottom, master, celltype;
+		input >> left >> top >> right >> bottom >> master >> celltype;
+		(cellManager->cellList[i]).changeValue(left, top, right, bottom,(PLAYER_TYPE)master,(CELL_TYPE)celltype);
 	}
 
+	input.close();
 	/*************************数据对接*************************/
 	//按钮的创建，之所以不使用for循环而采用一个一个输入是有原因的
 	Button *button_start_ = new Button({ startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2 });
-	ButtonList=new Button*[ButtonCount]
-	{
-		button_start_
+	Button *button_buy_ = new Button({ buyBtn_x1,buyBtn_y1,buyBtn_x2,buyBtn_y2 });
+	ButtonList=new Button*[ButtonCount]{
+		button_start_,button_buy_
 	};
 }
 
@@ -165,10 +177,16 @@ void EasyScene::showMessageBar()
 	TextOut(hdc, MessageBarTitle_x, MessageBarTitle_y, title, 4);
 
 	int iX = MessageBarText_x, iY = MessageBarText_y;
-	for (int i = 0; i < nowMessageCount; ++i)
+	for (int i = 0; i < nowMessageCount-1; ++i)
 	{
 		TextOut(hdc, iX, iY, messageList[i], wcslen(messageList[i]));
 		iY += 20;
+	}
+
+	if (nowMessageCount > 0)
+	{
+		SetTextColor(hdc, RGB(0, 0, 255));              //最后一条消息的颜色设置为与其他的不同
+		TextOut(hdc, iX, iY, messageList[nowMessageCount - 1], wcslen(messageList[nowMessageCount - 1]));
 	}
 }
 
@@ -188,13 +206,19 @@ void EasyScene::drawButton()
 	hdc = GetDC(hWnd);
 	SelectObject(hdc, penArr[WhiteThinPen]);
 	SelectObject(hdc, brushArr[BlackBrush]);
+	SetTextColor(hdc, RGB(255, 255, 255));          //设置文本颜色、背景色、大小
+	SetBkColor(hdc, RGB(0, 0, 0));
+	SelectObject(hdc, fontArr[fontSize_50]);
 
 	auto fn=[&](Button *button){                    //懒得想函数名，直接用lambda表达式
 		Rectangle(hdc, button->x1, button->y1, button->x2, button->y2);
 	};
 
-	for (int i = 0; i < ButtonCount; ++i)
-		fn(ButtonList[i]);
+	//绘制"掷骰子"按钮
+	fn(ButtonList[Btn_Start]);
+	TextOut(hdc, ButtonList[Btn_Start]->x1 + 10, ButtonList[Btn_Start]->y1 + 10,
+		Button_Name[Btn_Start], wcslen(Button_Name[Btn_Start]));
+
 	ReleaseDC(hWnd, hdc);
 }
 
@@ -290,10 +314,12 @@ void EasyScene::movePlayer(int n,PLAYER_TYPE type)
 		paint();
 	};
 
-	for (int i = 0; i < playerManager->realPlayerCount;++i)
+	//为了可扩展性，我为网络版留下了接口，但在这里为省事直接把这个接口破坏了，注意!
+	for (int i = 0; i < playerManager->realPlayerCount;++i)   
 		if (playerManager->realPlayerList[i].sign == type)
 		{
 			fn(&(playerManager->realPlayerList[i]));
+			playerManager->realPlayerList[i].buyCell();
 			return;
 		}
 

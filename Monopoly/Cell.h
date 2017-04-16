@@ -23,7 +23,7 @@ public:
 	void updateData(CELL_TYPE cellType,int price);
 	void updatePlayer(PLAYER_TYPE master);
 	void changeValue
-	(int left, int top, int right, int bottom, int price, PLAYER_TYPE master = Player_Empty, CELL_TYPE cellType = Cell_Empty);
+	(int left, int top, int right, int bottom,PLAYER_TYPE master = Player_Empty, CELL_TYPE cellType = Cell_Empty);
 	Cell& operator=(const Cell& other);
 
 	friend class Scene;

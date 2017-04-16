@@ -19,6 +19,9 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 	case Btn_Start:
 		BEINGPLAY = TRUE;
 		break;
+	case Btn_Buy:
+		CLICKBUY = 1;
+		break;
 	default:
 		break;
 	}

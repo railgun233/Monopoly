@@ -30,6 +30,9 @@ GameEngine::GameEngine()
 	brushArr[YellowBrush] = CreateSolidBrush(RGB(255, 255, 0));
 	brushArr[PinkBrush] = CreateSolidBrush(RGB(255, 0, 255));
 
+	fontArr[fontSize_20] = CreateFont(20, 0, 0, 0, 0, FALSE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
+	fontArr[fontSize_50]= CreateFont(50, 0, 80, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
+
 	createListenThread();
 
 	//Òþ²Ø¹â±ê

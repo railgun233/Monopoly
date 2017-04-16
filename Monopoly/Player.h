@@ -2,6 +2,8 @@
 #pragma once
 #include"global.h"
 
+class Cell;
+
 class Player
 {
 public:
@@ -16,9 +18,14 @@ public:
 	Player(wchar_t* name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_);
 	~Player(){}
 
-	void changeValue(wchar_t* name_,PLAYER_TYPE sign_,PLAYER_POS pos_,MONEY money); //当不需要改变位置时pos_传值为-1
+	//当不需要改变位置时pos_传值为-1,现在不允许使用-1这个值
+	void changeValue(wchar_t* name_,PLAYER_TYPE sign_,PLAYER_POS pos_,MONEY money); 
 	void updateData(MONEY newMoney) { money = newMoney; }
 
 	void moveTo(PLAYER_POS newPos);
+	void colliderCell();
+	void buyCell();
+	void directBuy();
+
 	void operator++();
 };
