@@ -26,6 +26,7 @@ public:
 	void colliderCell();
 	void buyCell();
 	void directBuy();
+	void printCellAndPlayerMessage();
 
 	void operator++();
 };

@@ -17,7 +17,8 @@ enum MOUSE_STATE												  //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
 
 //格子的价格类型或特殊属性,为方便起见，有特殊属性的格子不可买卖
-enum CELL_TYPE { ExpensivePrice = 0, NormalPrice = 1, CheapPrice = 2, Cell_Empty = 100 };
+//下方的Cell_CannotBuy用于占位,补充代码时删去
+enum CELL_TYPE { ExpensivePrice = 0, NormalPrice = 1, CheapPrice = 2, Cell_Empty = 100,Cell_CannotBuy=101 };
 const int cellPriceCount=3; extern int cellPrice[cellPriceCount];
 
 typedef int PLAYER_POS;											  //标记Player在哪个格子上
@@ -63,6 +64,7 @@ const int ButtonCount = 2;										//按钮的数量
 const int MaxPlayerCount = 10;									//最大玩家数量
 const int StringMaxLength = 32;									//最大字符串长度，包括标题和角色名
 const int SpaceBetweenPlayerAndCell = 10;						//玩家在格子上的空隙
+extern int cellAndPlayerText_x, cellAndPlayerText_y;            //格子的信息与玩家金钱显示文本的起始位置
 extern wchar_t ConsoleTitle[StringMaxLength];					//控制台窗口标题
 extern int CellCount;											//格子的数量
 extern wchar_t PlayerName[MaxPlayerCount][StringMaxLength];     //玩家的名字

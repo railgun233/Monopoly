@@ -73,7 +73,9 @@ void Player::colliderCell()
 void Player::buyCell()
 {
 	int price = easyScene->cellManager->cellList[pos].price;
-	if (easyScene->cellManager->cellList[pos].master == Player_Empty&&price <= money)
+	if (easyScene->cellManager->cellList[pos].cellType<=Cell_Empty
+		&&easyScene->cellManager->cellList[pos].master == Player_Empty
+		&&price <= money)
 	{
 		easyScene->paint();
 		hWnd = GetConsoleWindow();
@@ -92,6 +94,7 @@ void Player::buyCell()
 		fn(ButtonList[Btn_Buy]);
 		TextOut(hdc, ButtonList[Btn_Buy]->x1 + 20, ButtonList[Btn_Buy]->y1 + 12,
 			Button_Name[Btn_Buy], wcslen(Button_Name[Btn_Buy]));
+		printCellAndPlayerMessage();
 
 		while (TRUE)
 		{
@@ -114,6 +117,27 @@ void Player::directBuy()
 {
 	easyScene->cellManager->cellList[pos].master = sign;
 	money -= easyScene->cellManager->cellList[pos].price;
+}
+
+void Player::printCellAndPlayerMessage()
+{
+	hWnd = GetConsoleWindow(); hdc = GetDC(hWnd);
+	SetTextColor(hdc, RGB(255, 255, 255));          //设置文本颜色、背景色、大小
+	SetBkColor(hdc, RGB(0, 0, 255));
+	SelectObject(hdc, fontArr[fontSize_20]);
+
+	wchar_t text_0[] = L"土地价钱:";
+	char text_1[10];
+	itoa(easyScene->cellManager->cellList[pos].price, text_1, 10);
+	wchar_t text_2[] = L"现有金钱:";
+	char text_3[10];
+	itoa(money, text_3, 10);
+
+	TextOut(hdc, cellAndPlayerText_x, cellAndPlayerText_y, text_0, wcslen(text_0));
+	TextOutA(hdc, cellAndPlayerText_x + 100, cellAndPlayerText_y, text_1, strlen(text_1));
+	TextOut(hdc, cellAndPlayerText_x, cellAndPlayerText_y+30, text_2, wcslen(text_2));
+	TextOutA(hdc, cellAndPlayerText_x + 100, cellAndPlayerText_y+30, text_3, strlen(text_3));
+	ReleaseDC(hWnd, hdc);
 }
 
 void Player::operator++()

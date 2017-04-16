@@ -73,6 +73,11 @@ void GameEngine::initialize()
 		continue;
 	input >> DicePos_x >> DicePos_y;
 
+	//读取格子的信息与玩家金钱显示文本的起始位置
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> cellAndPlayerText_x >> cellAndPlayerText_y;
+
 	input.close();
 	/****************************************宽字符读取部分**************************************************/
 	wchar_t wdiscard;

@@ -9,6 +9,7 @@ int DiceNumber;
 short ConsoleBufferWidth;	short ConsoleBufferHeight;	wchar_t ConsoleTitle[StringMaxLength];
 int WindowWidth;	int WindowHeight;	int CellCount; 
 int RealPlayerCount;	int robotPlayerCount;	int initialMoney;
+int cellAndPlayerText_x, cellAndPlayerText_y;                         //格子的信息与玩家金钱显示文本的起始位置
 int DicePos_x, DicePos_y;
 int cellPrice[cellPriceCount];
 wchar_t PlayerName[MaxPlayerCount][StringMaxLength];
