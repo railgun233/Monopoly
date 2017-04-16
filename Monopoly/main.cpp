@@ -22,7 +22,7 @@ HPEN penArr[penCount]; HBRUSH brushArr[brushCount];	HFONT fontArr[fontCount];
 POINT mousePos;		MOUSE_STATE Mouse_State;
 Button** ButtonList;	
 ButtonManager* buttonManager;	PlayerManager *playerManager;	EasyScene *easyScene;
-const wchar_t* Button_Name[] = { L"ÖÀ÷»×Ó",L"¹ºÂò" };
+const wchar_t* Button_Name[] = { L"ÖÀ÷»×Ó",L"¹ºÂò" ,L"È¡Ïû"};
 /*********************************************************************************************************************/
 
 int main()

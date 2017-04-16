@@ -62,6 +62,11 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 		continue;
 	input >> buyBtn_x1 >> buyBtn_y1 >> buyBtn_x2 >> buyBtn_y2;
 
+	//读取按钮三:取消按钮
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> cancelBuyBtn_x1 >> cancelBuyBtn_y1 >> cancelBuyBtn_x2 >> cancelBuyBtn_y2;
+
 	//关闭文件
 	input.close();
 
@@ -87,8 +92,9 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 	//按钮的创建，之所以不使用for循环而采用一个一个输入是有原因的
 	Button *button_start_ = new Button({ startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2 });
 	Button *button_buy_ = new Button({ buyBtn_x1,buyBtn_y1,buyBtn_x2,buyBtn_y2 });
+	Button *button_cancel_buy_ = new Button({ cancelBuyBtn_x1,cancelBuyBtn_y1,cancelBuyBtn_x2,cancelBuyBtn_y2 });
 	ButtonList=new Button*[ButtonCount]{
-		button_start_,button_buy_
+		button_start_,button_buy_,button_cancel_buy_
 	};
 }
 

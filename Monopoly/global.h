@@ -5,13 +5,13 @@
 #include<deque>													  //用于MessageBar,但在这个程序里，我并不是太信任标准库
 using std::deque;
 
-const int deltaTime = 200;										  //每帧的时间
+const int deltaTime = 250;										  //每帧的时间
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE												//用于标志Player的身份，玩家还是电脑，且有序号
 	{Player_robot1 = 0, Player_robot2 = 1, Player_robot3 = 2, Player_First = 8, Player_Second = 9,  Player_Empty = 100};
 
 enum BUTTON_TYPE												  //按键类型(按下了哪个按键)
-	{Btn_Start = 0, Btn_Buy=1,Btn_Empty = 100};
+	{Btn_Start = 0, Btn_Buy=1,Btn_CancelBuy=2,Btn_Empty = 100};
 
 enum MOUSE_STATE												  //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
@@ -60,7 +60,7 @@ extern POINT mousePos;
 //全局常量
 const bool PAUSE = 0;
 const bool RUN = 1;
-const int ButtonCount = 2;										//按钮的数量
+const int ButtonCount = 3;										//按钮的数量
 const int MaxPlayerCount = 10;									//最大玩家数量
 const int StringMaxLength = 32;									//最大字符串长度，包括标题和角色名
 const int SpaceBetweenPlayerAndCell = 10;						//玩家在格子上的空隙

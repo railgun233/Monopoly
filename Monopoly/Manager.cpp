@@ -22,6 +22,9 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 	case Btn_Buy:
 		CLICKBUY = 1;
 		break;
+	case Btn_CancelBuy:
+		NOTBUY = 1;
+		break;
 	default:
 		break;
 	}

@@ -94,6 +94,12 @@ void Player::buyCell()
 		fn(ButtonList[Btn_Buy]);
 		TextOut(hdc, ButtonList[Btn_Buy]->x1 + 20, ButtonList[Btn_Buy]->y1 + 12,
 			Button_Name[Btn_Buy], wcslen(Button_Name[Btn_Buy]));
+
+		//绘制"取消"按钮
+		fn(ButtonList[Btn_CancelBuy]);
+		TextOut(hdc, ButtonList[Btn_CancelBuy]->x1 + 20, ButtonList[Btn_CancelBuy]->y1 + 12,
+			Button_Name[Btn_CancelBuy], wcslen(Button_Name[Btn_CancelBuy]));
+
 		printCellAndPlayerMessage();
 
 		while (TRUE)
