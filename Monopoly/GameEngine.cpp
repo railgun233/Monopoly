@@ -95,7 +95,7 @@ void GameEngine::initialize()
 	SetConsoleTitle(ConsoleTitle);
 	COORD bufferSize = { ConsoleBufferWidth,ConsoleBufferHeight };
 	SetConsoleScreenBufferSize(hOutput, bufferSize);                            //改变缓冲区大小
-	SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, WindowWidth, WindowHeight, NULL);    //改变窗口大小
+	SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, WindowWidth, WindowHeight, NULL);    //改变窗口大小
 
 	//RECT rect_;                                           //这两个函数只用在测试时期获取需调整的数值(调试时使用)
 	//GetWindowRect(hWnd, &rect_);

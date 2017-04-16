@@ -1,4 +1,4 @@
-//共计26个格子，先做5个模板出来
+//共计26个格子
 //以下分别为left，top,right，bottom，price，master，cellType
 #150 100 250 200 0 0 0
  250 100 350 200 0 0 0

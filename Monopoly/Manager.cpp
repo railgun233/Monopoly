@@ -17,7 +17,7 @@ void ButtonManager::rectMessage(BUTTON_TYPE button)
 	switch (button)
 	{
 	case Btn_Start:
-		BEINGDICE = TRUE;
+		BEINGPLAY = TRUE;
 		break;
 	default:
 		break;

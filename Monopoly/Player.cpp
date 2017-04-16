@@ -36,7 +36,7 @@ void Player::moveTo(PLAYER_POS newPos)
 
 void Player::operator++()
 {
-	if (pos < CellCount)
+	if (pos < CellCount-1)
 		++pos;
 	else
 		pos = 0;

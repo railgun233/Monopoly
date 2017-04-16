@@ -61,7 +61,7 @@ extern int DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2;      //掷骰子框的位置
 const wchar_t PlayerInfoBarTitle[] = L"玩家信息";
 
 extern BOOL IF_SLEEP;	extern int SLEEP_TIME;        //这两个参数作为线程控制主线程的绘画程序是否休眠的关键
-extern BOOL BEINGDICE;		extern BOOL REPAINT;	extern int DiceNumber;
+extern BOOL BEINGPLAY;		extern BOOL REPAINT;	extern int DiceNumber;
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息

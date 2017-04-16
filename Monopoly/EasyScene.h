@@ -32,5 +32,6 @@ public:
 	void movePlayer(int n, PLAYER_TYPE type);
 
 	void run();                                       //运行
+	void allStartMove();                              //可以视为开启帧动画
 };
 extern EasyScene *easyScene;

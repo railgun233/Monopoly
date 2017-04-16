@@ -125,13 +125,27 @@ void EasyScene::run()            //´Ëº¯ÊýÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ð§¹û¶
 			ReleaseDC(hWnd, hdc);
 			REPAINT = FALSE;
 		}
-		if (BEINGDICE)
+		if (BEINGPLAY)
 		{
-			DiceNumber=playDice();
-			Sleep(1500);
-			movePlayer(DiceNumber, nowPlayer);
-			BEINGDICE = FALSE;
+			allStartMove();
+			BEINGPLAY = FALSE;
 		}
+	}
+}
+
+void EasyScene::allStartMove()
+{
+	for (int i = 0; i < playerManager->realPlayerCount; ++i)
+	{
+		DiceNumber = playDice();
+		Sleep(1500);
+		movePlayer(DiceNumber, playerManager->realPlayerList[i].sign);
+	}
+	for (int i = 0; i < playerManager->robotCount; ++i)
+	{
+		DiceNumber = playDice();
+		Sleep(1500);
+		movePlayer(DiceNumber, playerManager->robotList[i].sign);
 	}
 }
 

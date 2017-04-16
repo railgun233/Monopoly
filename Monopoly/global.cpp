@@ -1,5 +1,6 @@
 #include "global.h"
 #include"Manager.h"
+#include<ctime>
 
 void createListenThread()
 {
@@ -45,7 +46,8 @@ int playDice()
 {
 	hWnd = GetConsoleWindow();
 	hdc = GetDC(hWnd);
-	int diceNumber = rand() % 4 + rand()%4;
+	srand((unsigned)time(NULL));
+	int diceNumber = rand() % 4 + rand()%3+1;
 	char text[2];
 	itoa(diceNumber,text,10);
 	SetTextColor(hdc, RGB(255, 0, 0));
