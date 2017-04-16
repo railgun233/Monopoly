@@ -2,16 +2,19 @@
 //注意变量的声明方式，防止重定义
 #pragma once
 #include<Windows.h>
-const int deltaTime = 200;
+#include<deque>													//用于MessageBar,但在这个程序里，我并不是太信任标准库
+using std::deque;
+
+const int deltaTime = 200;										//每帧的时间
 /***************************************类型定义*******************************************************/
-enum PLAYER_TYPE                                      //用于标志Player的身份，玩家还是电脑，且有序号
+enum PLAYER_TYPE												//用于标志Player的身份，玩家还是电脑，且有序号
 	{Player_robot1 = 0, Player_robot2 = 1, Player_robot3 = 2, Player_First = 8, Player_Second = 9,  Player_Empty = 100};
-enum BUTTON_TYPE                                      //按键类型(按下了哪个按键)
+enum BUTTON_TYPE												//按键类型(按下了哪个按键)
 	{Btn_Start = 0, Btn_Empty = 100};
-enum MOUSE_STATE                                      //鼠标标志位
+enum MOUSE_STATE												//鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
-enum CELL_TYPE { Cell_Empty = 0 };                    //格子的类型
-typedef int PLAYER_POS;                                //标记Player在哪个格子上
+enum CELL_TYPE { Cell_Empty = 0 };								//格子的类型
+typedef int PLAYER_POS;											//标记Player在哪个格子上
 typedef int MONEY;
 
 //画笔、画刷资源定义
@@ -29,7 +32,7 @@ extern BOOL RUNGAME;
 extern BOOL LEAVEGAME;
 
 extern HANDLE hListenThread;
-extern BOOL ListenThreadState;   //用于特殊情形下暂停监听线程
+extern BOOL ListenThreadState;									//用于特殊情形下暂停监听线程
 
 extern PLAYER_TYPE nowPlayer;
 /*************************************全局变量部分*****************************************************/
@@ -40,10 +43,10 @@ extern int WindowWidth;
 extern int WindowHeight;
 
 //句柄等
-extern HWND hWnd;                    //窗口句柄
-extern HDC	hdc;					//设备句柄
-extern HANDLE hOutput;               //窗口输出句柄
-extern HANDLE hInput;                //窗口输入句柄
+extern HWND hWnd;												//窗口句柄
+extern HDC	hdc;												//设备句柄
+extern HANDLE hOutput;											//窗口输出句柄
+extern HANDLE hInput;											//窗口输入句柄
 extern POINT mousePos;
 
 //全局常量
@@ -57,13 +60,14 @@ extern wchar_t ConsoleTitle[StringMaxLength];					//控制台窗口标题
 extern int CellCount;											//格子的数量
 extern wchar_t PlayerName[MaxPlayerCount][StringMaxLength];     //玩家的名字
 extern int initialMoney;                                        //初始金钱
-extern int DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2;      //掷骰子框的位置
 const wchar_t PlayerInfoBarTitle[] = L"玩家信息";
-
-extern BOOL IF_SLEEP;	extern int SLEEP_TIME;        //这两个参数作为线程控制主线程的绘画程序是否休眠的关键
+extern int DicePos_x, DicePos_y;                                //骰子数出现的位置
+extern BOOL IF_SLEEP;	extern int SLEEP_TIME;					//这两个参数作为线程控制主线程的绘画程序是否休眠的关键
 extern BOOL BEINGPLAY;		extern BOOL REPAINT;	extern int DiceNumber;
+extern const int MessageCount;	extern int nowMessageCount; extern deque<wchar_t*> messageList;
 /**************************************函数部分********************************************************/
 void createListenThread();
-DWORD WINAPI ListenThread(LPVOID param);           //线程函数，用于监听按键、鼠标信息
-void hideCursor();                                 //隐藏光标
+DWORD WINAPI ListenThread(LPVOID param);						//线程函数，用于监听按键、鼠标信息
+void hideCursor();												//隐藏光标
 int playDice();
+void addMessageToBar(wchar_t* msg, int l);						//添加消息至消息栏

@@ -7,8 +7,8 @@ BOOL BEINGPLAY;	BOOL REPAINT;	int DiceNumber;		PLAYER_TYPE nowPlayer;
 //设置类全局变量
 short ConsoleBufferWidth;	short ConsoleBufferHeight;	wchar_t ConsoleTitle[StringMaxLength];
 int WindowWidth;	int WindowHeight;	int CellCount; 
-int DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2;
 int RealPlayerCount;	int robotPlayerCount;	int initialMoney;
+int DicePos_x, DicePos_y;
 wchar_t PlayerName[MaxPlayerCount][StringMaxLength];
 //句柄全局变量
 HANDLE hListenThread;	BOOL ListenThreadState;

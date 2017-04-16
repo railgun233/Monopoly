@@ -1,6 +1,8 @@
 #include "global.h"
 #include"Manager.h"
 #include<ctime>
+deque<wchar_t*> messageList;
+const int MessageCount = 4;	int nowMessageCount;
 
 void createListenThread()
 {
@@ -25,7 +27,7 @@ DWORD WINAPI ListenThread(LPVOID param)
 				if (record.EventType == MOUSE_EVENT&&record.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 				{
 					GetCursorPos(&mousePos);
-					//ScreenToClient(hWnd, &mousePos);
+					ScreenToClient(hWnd, &mousePos);
 					Mouse_State = Mouse_LeftClick;      //处理完click消息后记得恢复鼠标状态
 					buttonManager->getMessage();
 				}
@@ -50,8 +52,25 @@ int playDice()
 	int diceNumber = rand() % 4 + rand()%3+1;
 	char text[2];
 	itoa(diceNumber,text,10);
-	SetTextColor(hdc, RGB(255, 0, 0));
-	TextOutA(hdc, DiceBox_x1+20, DiceBox_y2-20,text,2);
-	int i = GetLastError();
+	SetTextColor(hdc, RGB(255, 0, 0));                   //文本设置成红色
+	TextOutA(hdc, DicePos_x, DicePos_y-20,text,2);
 	return diceNumber;
+}
+
+void addMessageToBar(wchar_t * msg, int l)
+{
+	if (nowMessageCount < MessageCount)
+	{
+		messageList[nowMessageCount] = new wchar_t[l + 1];
+		wcscpy(messageList[nowMessageCount], msg);
+		++nowMessageCount;
+	}
+	else
+	{
+		delete [](messageList[0]);
+		for (int i = 0; i < MessageCount-1; ++i)
+			messageList[i] = messageList[i + 1];
+		messageList[nowMessageCount-1]= new wchar_t[l + 1];
+		wcscpy(messageList[nowMessageCount-1], msg);
+	}
 }

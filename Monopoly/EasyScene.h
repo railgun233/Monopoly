@@ -12,6 +12,8 @@ private:
 	int line3_y, line3_x1, line3_x2;                                      //line3为右栏里按钮栏和玩家栏的分隔线
 	int PlayerInfoBarTitle_x, PlayerInfoBarTitle_y;                       //玩家信息栏标题的起始位置
 	int PlayerInfoBar_x, PlayerInfoBar_y;                                 //玩家信息栏文本的起始位置
+	int MessageBarTitle_x, MessageBarTitle_y;                             //消息栏标题的起始位置
+	int MessageBarText_x, MessageBarText_y;                               //消息栏文本的起始位置
 	int startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2;               //开始按钮
 
 public:
@@ -22,7 +24,7 @@ public:
 	void loadData();                                  //所有Cell的数据也是在这里导入
 
 	void paint();                                     //绘制界面
-	void MessageBar();                                //用于绘制消息栏，显示各个玩家的实时消息
+	void showMessageBar();                                //用于绘制消息栏，显示各个玩家的实时消息
 
 	void drawCell();
 	void drawButton();

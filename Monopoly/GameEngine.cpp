@@ -12,6 +12,7 @@ GameEngine::GameEngine()
 	hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	hInput = GetStdHandle(STD_INPUT_HANDLE);
 	GetCursorPos(&mousePos);                       //时刻牢记使用mousePos前要先转为客户区坐标
+	nowMessageCount = 0;messageList.resize(MessageCount);
 
 	/**********************************将画刷、画笔资源初始化*******************************/
 	penArr[WhiteThinPen] = CreatePen(PS_SOLID, ThinPen, RGB(255, 255, 255));
@@ -64,10 +65,10 @@ void GameEngine::initialize()
 		continue;
 	input >> initialMoney;
 
-	//读取掷骰子的框的位置
+	//读取骰子出现的位置
 	while (input >> discard && (discard != '#'))
 		continue;
-	input >> DiceBox_x1 >> DiceBox_y1 >> DiceBox_x2 >> DiceBox_y2;
+	input >> DicePos_x >> DicePos_y;
 
 	input.close();
 	/****************************************宽字符读取部分**************************************************/

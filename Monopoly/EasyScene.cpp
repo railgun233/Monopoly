@@ -47,6 +47,11 @@ void EasyScene::loadData()  //读取数据的操作尽量在游戏准备阶段全部完成，尤其是我
 		continue;
 	input >> PlayerInfoBarTitle_x >> PlayerInfoBarTitle_y >> PlayerInfoBar_x >> PlayerInfoBar_y;
 
+	//读取消息栏标题的起始坐标，文本的起始坐标
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> MessageBarTitle_x >> MessageBarTitle_y >> MessageBarText_x >> MessageBarText_y;
+	
 	//读取第一个按钮:掷骰子按钮
 	while (input >> discard && (discard != '#'))
 		continue;
@@ -97,14 +102,14 @@ void EasyScene::paint()
 	/*******************************************绘制格子***********************************************/
 	drawCell();
 
-	/****************************************绘制骰子框***********************************************/
-	Rectangle(hdc, DiceBox_x1, DiceBox_y1, DiceBox_x2, DiceBox_y2);
-
 	/****************************************绘制玩家************************************************/
 	drawPlayer();
 
 	/***************************************绘制玩家信息栏*******************************************/
 	drawPlayerInfoBar();
+
+	/****************************************绘制消息栏*********************************************/
+	showMessageBar();
 
 	ReleaseDC(hWnd, hdc);
 }
@@ -149,9 +154,22 @@ void EasyScene::allStartMove()
 	}
 }
 
-void EasyScene::MessageBar()
+void EasyScene::showMessageBar()
 {
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+	SetTextColor(hdc, RGB(0, 255, 0));
+	SetBkColor(hdc, RGB(0, 0, 0));
 
+	wchar_t title[] = L"消息记录";
+	TextOut(hdc, MessageBarTitle_x, MessageBarTitle_y, title, 4);
+
+	int iX = MessageBarText_x, iY = MessageBarText_y;
+	for (int i = 0; i < nowMessageCount; ++i)
+	{
+		TextOut(hdc, iX, iY, messageList[i], wcslen(messageList[i]));
+		iY += 20;
+	}
 }
 
 void EasyScene::drawCell()
@@ -216,7 +234,7 @@ void EasyScene::drawPlayerInfoBar()
 	hWnd = GetConsoleWindow();
 	hdc = GetDC(hWnd);
 	char moneyNumber[10];
-	SetTextColor(hdc, RGB(255, 0, 0));
+	SetTextColor(hdc, RGB(255, 0, 0));         //文本设置成红色，背景设置成黑色
 	SetBkColor(hdc, RGB(0, 0, 0));
 
 	//绘制标题
@@ -251,6 +269,15 @@ void EasyScene::movePlayer(int n,PLAYER_TYPE type)
 	HBRUSH hClear = CreateSolidBrush(RGB(0, 0, 0));
 	RECT rect = { WindowWidth,WindowHeight };
 	
+	auto addmessage = [&](Player* player) {
+		wchar_t la[] = L"移动完毕";
+		int size = wcslen(player->name) + 5;
+		wchar_t *ps = new wchar_t[size];
+		wcscpy(ps, player->name);
+		wcscat(ps, la);
+		addMessageToBar(ps, size);
+	};
+
 	auto fn=[&](Player* player){
 		for (int j = 0; j < n; ++j){
 			++(*player);
@@ -259,6 +286,8 @@ void EasyScene::movePlayer(int n,PLAYER_TYPE type)
 			paint();
 			Sleep(deltaTime);
 		}
+		addmessage(player);
+		paint();
 	};
 
 	for (int i = 0; i < playerManager->realPlayerCount;++i)
