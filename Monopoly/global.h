@@ -8,7 +8,7 @@ using std::deque;
 const int deltaTime = 250;										  //每帧的时间
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE												//用于标志Player的身份，玩家还是电脑，且有序号
-	{Player_robot1 = 0, Player_robot2 = 1, Player_robot3 = 2, Player_First = 8, Player_Second = 9,  Player_Empty = 100};
+	{Player_robot1 = 2, Player_robot2 = 3, Player_robot3 = 4, Player_First = 5, Player_Second = 9,  Player_Empty = 0};
 
 enum BUTTON_TYPE												  //按键类型(按下了哪个按键)
 	{Btn_Start = 0, Btn_Buy=1,Btn_CancelBuy=2,Btn_Empty = 100};
@@ -29,13 +29,17 @@ const int ThinPen = 2;
 const int MiddlePen = 5;
 const int ThickPen = 8;
 
+	//我的想法是:根据Player_Type来画格子和玩家，格子的颜色浅一点，玩家的调到最深
+	//因此深色画刷和浅色画刷当然要相互对应
+	//出于偷懒，不创建太多画刷了
 enum Pen{WhiteThinPen=0,RedThinPen=1,BlueThinPen=2,GreenThinPen=3,YellowThinPen=4,PinkThinPen=5};
-enum Brush{WhiteBrush=0,BlackBrush=1,RedBrush=2,BlueBrush=3,GreenBrush=4,YellowBrush=5,PinkBrush=6};
+enum Brush{WhiteBrush=0,BlackBrush=1,RedBrush=2,BlueBrush=3,GreenBrush=4,YellowBrush=5,PinkBrush=6};//浅色的也是这个顺序
 enum Font{fontSize_20=0,fontSize_50=1};
+
 //数字之间要对得上，这是本程序里为数不多的硬编码了
 const int penCount = 6;	const int brushCount = 7;	const int fontCount = 2;
 extern HPEN penArr[penCount];	extern HBRUSH brushArr[brushCount];
-extern HFONT fontArr[fontCount];
+extern HFONT fontArr[fontCount];	extern HBRUSH lightBrushArr[brushCount];
 /********************************标志性全局变量(状态)部分**********************************************/
 extern BOOL RUNGAME;
 extern BOOL LEAVEGAME;

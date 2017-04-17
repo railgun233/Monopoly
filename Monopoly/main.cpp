@@ -1,38 +1,16 @@
 #include"game.h"
-/******************************************乱七八糟的变量全在这定义了*************************************************/
-/***********************************若想了解变量的详情可前往global.h**************************************************/
-//标志性全局变量
-BOOL RUNGAME;	BOOL LEAVEGAME;		BOOL IF_SLEEP;	int SLEEP_TIME = 50;
-BOOL BEINGPLAY;	BOOL REPAINT;	BOOL CLICKBUY;	BOOL NOTBUY;
-int DiceNumber;
-//设置类全局变量
-short ConsoleBufferWidth;	short ConsoleBufferHeight;	wchar_t ConsoleTitle[StringMaxLength];
-int WindowWidth;	int WindowHeight;	int CellCount; 
-int RealPlayerCount;	int robotPlayerCount;	int initialMoney;
-int cellAndPlayerText_x, cellAndPlayerText_y;                         //格子的信息与玩家金钱显示文本的起始位置
-int DicePos_x, DicePos_y;
-int cellPrice[cellPriceCount];
-wchar_t PlayerName[MaxPlayerCount][StringMaxLength];
-//句柄全局变量
-HANDLE hListenThread;	BOOL ListenThreadState;
-HWND hWnd;	HDC	 hdc;
-HANDLE hOutput;	HANDLE hInput;
-HPEN penArr[penCount]; HBRUSH brushArr[brushCount];	HFONT fontArr[fontCount];
-//一般全局变量
-POINT mousePos;		MOUSE_STATE Mouse_State;
-Button** ButtonList;	
-ButtonManager* buttonManager;	PlayerManager *playerManager;	EasyScene *easyScene;
-const wchar_t* Button_Name[] = { L"掷骰子",L"购买" ,L"取消"};
-/*********************************************************************************************************************/
+
+//原本打算增加选择电脑玩家数量的选项的，后来发现寻找配色困难，直接去掉了
+//同理，网络部分也不容易完成(在不重写一部分场景代码的情况下，当然，主要是因为懒)
+//在我的设想里，对于这个游戏,网络版的话只要有一端充当"服务器端"，每回合传输新数据即可
+const int RealPlayerCount=1;	const int robotPlayerCount=3;
 
 int main()
 {
 	//开始游戏界面
 
 
-	//在这个阶段要让玩家输入RealPlayerCount和robotPlayerCount，否则后续的构造不成功
-	RealPlayerCount = 1; robotPlayerCount = 3;
-
+	//初始化所有线程间的关联数据
 	RUNGAME = 1; LEAVEGAME = 0; IF_SLEEP = 0; CLICKBUY = 0; NOTBUY = 0;
 
 	gameEngine = new GameEngine();                //这些类基本都是只能存在一个
@@ -57,5 +35,6 @@ int main()
 	delete gameEngine;
 	delete easyScene;
 	delete buttonManager;
+	delete playerManager;
 	return 0;
 }

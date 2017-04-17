@@ -201,6 +201,7 @@ void EasyScene::drawCell()
 	hdc = GetDC(hWnd);
 	for (int i = 0; i < CellCount; ++i)             //不敢使用迭代器了，此前在Button处使用过，全线崩溃
 	{
+		SelectObject(hdc, lightBrushArr[cellManager->cellList[i].master]);
 		Rectangle(hdc, cellManager->cellList[i].left, cellManager->cellList[i].top,
 			cellManager->cellList[i].right, cellManager->cellList[i].bottom);
 	}
@@ -232,12 +233,10 @@ void EasyScene::drawPlayer()
 {
 	hWnd = GetConsoleWindow();
 	hdc = GetDC(hWnd);
-	SelectObject(hdc, brushArr[BlueBrush]);
-	Brush brush = Brush(2);
+
 	for (int i = 0; i < playerManager->realPlayerCount; ++i)
 	{
-		SelectObject(hdc, brushArr[brush]);
-		brush = Brush(brush + 1);
+		SelectObject(hdc, brushArr[playerManager->realPlayerList[i].sign]);
 		Ellipse(hdc,
 			playerManager->realPlayerList[i].left,
 			playerManager->realPlayerList[i].top,
@@ -245,10 +244,10 @@ void EasyScene::drawPlayer()
 			playerManager->realPlayerList[i].bottom
 			);
 	}
+
 	for (int i = 0; i < playerManager->robotCount; ++i)
 	{
-		SelectObject(hdc, brushArr[brush]);
-		brush = Brush(brush + 1);
+		SelectObject(hdc, brushArr[playerManager->robotList[i].sign]);
 		Ellipse(hdc,
 			playerManager->robotList[i].left,
 			playerManager->robotList[i].top,
@@ -265,6 +264,7 @@ void EasyScene::drawPlayerInfoBar()
 	hdc = GetDC(hWnd);
 	char moneyNumber[10];
 	SetTextColor(hdc, RGB(255, 0, 0));         //文本设置成红色，背景设置成黑色
+	SelectObject(hdc, fontArr[fontSize_20]);   //设置字体大小
 	SetBkColor(hdc, RGB(0, 0, 0));
 
 	//绘制标题
@@ -276,20 +276,20 @@ void EasyScene::drawPlayerInfoBar()
 	{
 		_itoa((playerManager->realPlayerList)[i].money, moneyNumber, 10);    //10代表十进制
 		TextOut(hdc, iX, iY, text1, wcslen(text1));
-		TextOut(hdc, iX + 80, iY,
+		TextOut(hdc, iX + 100, iY,
 			((playerManager->realPlayerList)[i].name), wcslen(((playerManager->realPlayerList)[i].name)));
-		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
-		iY += 20;
+		TextOutA(hdc, iX + 180, iY, moneyNumber, strlen(moneyNumber));
+		iY += 30;
 	}
 
 	for (int i = 0; i < playerManager->robotCount; ++i)            //机器人玩家
 	{
 		_itoa((playerManager->robotList)[i].money, moneyNumber, 10);
 		TextOut(hdc, iX, iY, text2, wcslen(text2));
-		TextOut(hdc, iX + 80, iY,
+		TextOut(hdc, iX + 100, iY,
 			((playerManager->robotList)[i].name), wcslen(((playerManager->robotList)[i].name)));
-		TextOutA(hdc, iX + 150, iY, moneyNumber, strlen(moneyNumber));
-		iY += 20;
+		TextOutA(hdc, iX + 180, iY, moneyNumber, strlen(moneyNumber));
+		iY += 30;
 	}
 }
 

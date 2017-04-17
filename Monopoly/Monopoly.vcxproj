@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="data.cpp" />
     <ClCompile Include="EasyScene.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="global.cpp" />

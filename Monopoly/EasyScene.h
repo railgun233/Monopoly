@@ -26,7 +26,7 @@ public:
 	void loadData();                                  //所有Cell的数据也是在这里导入
 
 	void paint();                                     //绘制界面
-	void showMessageBar();                                //用于绘制消息栏，显示各个玩家的实时消息
+	void showMessageBar();                            //用于绘制消息栏，显示各个玩家的实时消息
 
 	void drawCell();
 	void drawButton();
