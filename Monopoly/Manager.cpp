@@ -76,3 +76,40 @@ void PlayerManager::createPlayer()
 	for (int i =0; i < realPlayerCount; ++i)
 		realPlayerList[i].changeValue(PlayerName[j+i], PLAYER_TYPE(j+i), 0, initialMoney);
 }
+
+void PlayerManager::deletePlayer(PLAYER_TYPE type)
+{
+	for (int i = 0; i < realPlayerCount; ++i)
+	{
+		if (type == realPlayerList[i].sign)             //同样破坏了网络版的基础
+		{
+			GAMEOVER = true;
+			return;
+		}
+	}
+
+	for (int i = 0; i < robotCount; ++i)
+	{
+		if (type == robotList[i].sign)
+		{
+			deletePlayer(i);
+			return;
+		}
+	}
+}
+
+void PlayerManager::deletePlayer(int n)
+{
+	robot* temp= new robot[robotCount - 1];
+	int j = 0;
+	for (int i = 0; i < robotCount; ++i)
+		if (i != n)
+		{
+			temp[j] = robotList[i];
+			++j;
+		}
+	delete[]robotList;
+	robotList = temp;
+	--robotCount;
+	--playerCount;
+}

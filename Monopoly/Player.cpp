@@ -50,8 +50,15 @@ void Player::colliderCell()
 	{
 		int price_ = easyScene->cellManager->cellList[pos].price/10;
 		PLAYER_TYPE type_ = easyScene->cellManager->cellList[pos].master;
+		int temp = money;
 		money -= price_;
-		for (int i = 0; i < playerManager->realPlayerCount; ++i)
+		if (money < 0)
+		{
+			price_ = temp;
+			money = Bankrupt;
+		}
+
+		for (int i = 0; i < playerManager->realPlayerCount; ++i)    
 		{
 			if ((playerManager->realPlayerList)[i].sign == type_)
 			{
@@ -154,4 +161,11 @@ void Player::operator++()
 	else
 		pos = 0;
 	moveTo(pos);
+}
+
+void Player::operator=(Player &other)
+{
+	wcscpy(name, other.name);
+	sign = other.sign;pos = other.pos;money = other.money;
+	left = other.left; top = other.top; right = other.right; bottom=other.bottom;
 }

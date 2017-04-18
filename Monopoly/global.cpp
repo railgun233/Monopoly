@@ -13,12 +13,14 @@ void createListenThread()
 }
 
 //可能存在隐患，需测试，若无法保证完美运行，需加入线程同步机制
+//然而测试至今从未出错过
 DWORD WINAPI ListenThread(LPVOID param)
 {
 	DWORD eventNumber;                                //这两个变量只是占位用的
 	INPUT_RECORD record;
+
 	hInput = GetStdHandle(STD_INPUT_HANDLE);
-	while (!LEAVEGAME)
+	while (TRUE)
 	{
 		if (ListenThreadState)
 		{

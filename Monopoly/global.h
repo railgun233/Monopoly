@@ -8,7 +8,7 @@ using std::deque;
 const int deltaTime = 250;										  //每帧的时间
 /***************************************类型定义*******************************************************/
 enum PLAYER_TYPE												//用于标志Player的身份，玩家还是电脑，且有序号
-	{Player_robot1 = 2, Player_robot2 = 3, Player_robot3 = 4, Player_First = 5, Player_Second = 9,  Player_Empty = 0};
+	{Player_robot1 = 2, Player_robot2 = 3, Player_robot3 = 4, Player_First = 5, Player_Second = 6,  Player_Empty = 0};
 
 enum BUTTON_TYPE												  //按键类型(按下了哪个按键)
 	{Btn_Start = 0, Btn_Buy=1,Btn_CancelBuy=2,Btn_Empty = 100};
@@ -16,8 +16,7 @@ enum BUTTON_TYPE												  //按键类型(按下了哪个按键)
 enum MOUSE_STATE												  //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
 
-//AI类型
-enum AI_TYPE { AI_Rude = 0, AI_Cautious = 1, AI_Smart = 2 };
+enum AI_TYPE { AI_Rude = 0, AI_Cautious = 1, AI_Smart = 2 };      //AI类型
 
 //格子的价格类型或特殊属性,为方便起见，有特殊属性的格子不可买卖
 //下方的Cell_CannotBuy用于占位,补充代码时删去
@@ -44,9 +43,6 @@ const int penCount = 6;	const int brushCount = 7;	const int fontCount = 2;
 extern HPEN penArr[penCount];	extern HBRUSH brushArr[brushCount];
 extern HFONT fontArr[fontCount];	extern HBRUSH lightBrushArr[brushCount];
 /********************************标志性全局变量(状态)部分**********************************************/
-extern BOOL RUNGAME;
-extern BOOL LEAVEGAME;
-
 extern HANDLE hListenThread;
 extern BOOL ListenThreadState;									//用于特殊情形下暂停监听线程
 
@@ -67,6 +63,7 @@ extern POINT mousePos;
 //全局常量
 const bool PAUSE = 0;
 const bool RUN = 1;
+const int Bankrupt = -1;
 const int ButtonCount = 3;										//按钮的数量
 const int MaxPlayerCount = 10;									//最大玩家数量
 const int StringMaxLength = 32;									//最大字符串长度，包括标题和角色名
@@ -78,12 +75,13 @@ extern wchar_t PlayerName[MaxPlayerCount][StringMaxLength];     //玩家的名字
 extern int initialMoney;                                        //初始金钱
 const wchar_t PlayerInfoBarTitle[] = L"玩家信息";
 extern int DicePos_x, DicePos_y;                                //骰子数出现的位置
-extern BOOL IF_SLEEP;	extern int SLEEP_TIME;					//这两个参数作为线程控制主线程的绘画程序是否休眠的关键
-extern BOOL BEINGPLAY;		extern BOOL REPAINT;	extern int DiceNumber;
+extern int SLEEP_TIME;					//这两个参数作为线程控制主线程的绘画程序是否休眠的关键
+extern BOOL BEINGPLAY;		extern BOOL GAMEOVER;	extern int DiceNumber;
 extern BOOL CLICKBUY;	extern BOOL NOTBUY;
 const int MessageCount = 4;	extern int nowMessageCount; extern deque<wchar_t*> messageList;
 
 extern const wchar_t* Button_Name[];
+extern wchar_t ruleText[128];	extern wchar_t promptText[128];
 /**************************************函数部分********************************************************/
 void createListenThread();
 DWORD WINAPI ListenThread(LPVOID param);						//线程函数，用于监听按键、鼠标信息

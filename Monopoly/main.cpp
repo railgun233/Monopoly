@@ -11,11 +11,11 @@ int main()
 
 
 	//初始化所有线程间的关联数据
-	RUNGAME = 1; LEAVEGAME = 0; IF_SLEEP = 0; CLICKBUY = 0; NOTBUY = 0;
+	CLICKBUY = 0; NOTBUY = 0;
 
 	gameEngine = new GameEngine();                //这些类基本都是只能存在一个
-	ListenThreadState = PAUSE;
-	gameEngine->initialize();                     //先暂停监听线程
+	ListenThreadState = PAUSE;                    //先暂停监听线程
+	gameEngine->initialize(); 
 
 	buttonManager = new ButtonManager();          //严格来讲它的声明位置是无关紧要的
 	AI_Engine = new AI();
@@ -24,12 +24,9 @@ int main()
 
 	ListenThreadState = RUN;
 
-	while (!LEAVEGAME)
-	{
-		gameEngine->loadScene(easyScene,playerManager);
-		gameEngine->run();
-	}
-
+	gameEngine->loadScene(easyScene,playerManager);
+	gameEngine->run();
+	
 	//结束游戏界面
 
 

@@ -14,6 +14,8 @@ private:
 	int PlayerInfoBar_x, PlayerInfoBar_y;									//玩家信息栏文本的起始位置
 	int MessageBarTitle_x, MessageBarTitle_y;								//消息栏标题的起始位置
 	int MessageBarText_x, MessageBarText_y;									//消息栏文本的起始位置
+	int ruleText_x, ruleText_y;                                             //规则文本的起始位置
+	int promptText_x, promptText_y;                                         //提示文本的起始位置
 	int startBtn_x1, startBtn_y1, startBtn_x2, startBtn_y2;					//开始按钮
 	int buyBtn_x1, buyBtn_y1, buyBtn_x2, buyBtn_y2;							//购买按钮
 	int cancelBuyBtn_x1, cancelBuyBtn_y1, cancelBuyBtn_x2, cancelBuyBtn_y2; //取消按钮

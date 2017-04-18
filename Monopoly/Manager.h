@@ -22,6 +22,10 @@ public:
 	~PlayerManager();
 
 	void createPlayer();
+	void deletePlayer(PLAYER_TYPE type);      //这个函数主要是为robot准备的，很遗憾我再次破坏了接口
+
+private:
+	void deletePlayer(int n);
 };
 extern PlayerManager *playerManager;
 

@@ -29,4 +29,5 @@ public:
 	void printCellAndPlayerMessage();
 
 	void operator++();
+	void operator=(Player& other);
 };

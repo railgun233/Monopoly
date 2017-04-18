@@ -13,7 +13,7 @@ EasyScene::EasyScene()
 {
 	cellManager = new CellManager(CellCount);
 	loadData();
-	REPAINT = FALSE;
+	GAMEOVER = FALSE;
 }
 
 EasyScene::~EasyScene()
@@ -52,6 +52,11 @@ void EasyScene::loadData()  //¶ÁÈ¡Êı¾İµÄ²Ù×÷¾¡Á¿ÔÚÓÎÏ·×¼±¸½×¶ÎÈ«²¿Íê³É£¬ÓÈÆäÊÇÎÒ
 		continue;
 	input >> MessageBarTitle_x >> MessageBarTitle_y >> MessageBarText_x >> MessageBarText_y;
 	
+	//¶ÁÈ¡¹æÔòÎÄ±¾¡¢ÌáÊ¾ÎÄ±¾µÄÆğÊ¼Î»ÖÃ
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> ruleText_x >> ruleText_y >> promptText_x >> promptText_y;
+
 	//¶ÁÈ¡µÚÒ»¸ö°´Å¥:ÖÀ÷»×Ó°´Å¥
 	while (input >> discard && (discard != '#'))
 		continue;
@@ -129,6 +134,15 @@ void EasyScene::paint()
 	/****************************************»æÖÆÏûÏ¢À¸*********************************************/
 	showMessageBar();
 
+	/***************************************¹æÔòÓëÌáÊ¾µÄÏÔÊ¾***************************************/
+	hdc = GetDC(hWnd);
+	SetTextColor(hdc, RGB(255, 0, 0));          //ÉèÖÃÎÄ±¾ÑÕÉ«¡¢±³¾°É«¡¢´óĞ¡
+	SetBkColor(hdc, RGB(0, 0, 0));
+	SelectObject(hdc, fontArr[fontSize_50]);
+
+	TextOut(hdc, ruleText_x, ruleText_y, ruleText, wcslen(ruleText));
+	TextOut(hdc, promptText_x, promptText_y, promptText, wcslen(promptText));
+
 	ReleaseDC(hWnd, hdc);
 }
 
@@ -137,16 +151,20 @@ void EasyScene::run()            //´Ëº¯ÊıÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ğ§¹û¶
 	paint();
 	HBRUSH hClear = CreateSolidBrush(RGB(0, 0, 0));
 	RECT rect = { WindowWidth,WindowHeight };
-	while (RUNGAME)
+	while (TRUE)
 	{
-		if (REPAINT)                //½çÃæ²»¸Ä±äµÄÇé¿öÏÂ¾Í²»½øĞĞÖØ»æ£¬Òª½øĞĞÖØ»æ×î¶ÌÊ±¼äÊÇdeltaTime
-		{                           //ÊÂÊµÉÏÕâ²¿·ÖÃ²ËÆ¸ù±¾¾ÍÃ»ÓÃµ½¹ı£¬¶¼ÊÇÖ±½Ó´ÓÍâ²¿½øĞĞ»æÖÆ
+		if (GAMEOVER)
+		{
 			hdc = GetDC(hWnd);
 			FillRect(hdc, &rect, hClear);
-			Sleep(deltaTime);
-			paint();
+			
+			SetTextColor(hdc, RGB(255, 255, 255));          //ÉèÖÃÎÄ±¾ÑÕÉ«¡¢±³¾°É«¡¢´óĞ¡
+			SetBkColor(hdc, RGB(0, 0, 0));
+			SelectObject(hdc, fontArr[fontSize_50]);
+
+			TextOut(hdc, 100, 100, L"ÓÎÏ·½áÊø", 4);
 			ReleaseDC(hWnd, hdc);
-			REPAINT = FALSE;
+			exit(0);
 		}
 		if (BEINGPLAY)
 		{
@@ -170,6 +188,21 @@ void EasyScene::allStartMove()
 		Sleep(1500);
 		movePlayer(DiceNumber, playerManager->robotList[i].sign);
 	}
+
+	PLAYER_TYPE deleteArr[4];               //×î¶à¾Í4¸öÍæ¼Ò,Ö±½ÓÓ²±àÂë³É4ÁË£¬ÀÁ
+	int cc = 0;
+	//¼ì²éÓĞÃ»ÓĞÆÆ²úµÄÍæ¼Ò£¬Ö±½ÓÌŞ³ıËû
+	//Ô­±¾ÎÒÊÇÔÚÃ¿ÒÆ¶¯Ò»¸öÍæ¼Ò¾Í½øĞĞÒ»´Îµ¥¶ÀµÄÅĞ¶Ï£¬µ«·¢ÏÖÓÉÓÚ½á¹¹ÏŞÖÆÄÇÑù×ö»áÔì³ÉÖØ´óbug£¬¹Ê·ÅÆú
+	for (int i = 0; i < playerManager->realPlayerCount; ++i)
+		if (playerManager->realPlayerList[i].money == Bankrupt)
+			deleteArr[cc++] = playerManager->realPlayerList[i].sign;
+	for (int i = 0; i < playerManager->robotCount; ++i)
+		if (playerManager->robotList[i].money == Bankrupt)
+			deleteArr[cc++] = playerManager->robotList[i].sign;
+
+	for (int i = 0; i < cc; ++i)
+		playerManager->deletePlayer(deleteArr[i]);
+
 }
 
 void EasyScene::showMessageBar()

@@ -38,8 +38,8 @@ GameEngine::GameEngine()
 	lightBrushArr[YellowBrush] = CreateSolidBrush(RGB(100, 100, 0));
 	lightBrushArr[PinkBrush] = CreateSolidBrush(RGB(100, 0, 100));
 
-	fontArr[fontSize_20] = CreateFont(20, 0, 0, 0, 0, FALSE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
-	fontArr[fontSize_50]= CreateFont(50, 0, 80, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
+	fontArr[fontSize_20] = CreateFont(20, 0, 0, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
+	fontArr[fontSize_50]= CreateFont(50, 0, 0, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
 
 	createListenThread();
 
@@ -97,6 +97,16 @@ void GameEngine::initialize()
 		continue;
 	winput >> ConsoleTitle;
 
+	//读取规则文本
+	while (winput >> wdiscard && (wdiscard != '#'))
+		continue;
+	winput >> ruleText;
+
+	//读取提示文本
+	while (winput >> wdiscard && (wdiscard != '#'))
+		continue;
+	winput >> promptText;
+
 	winput.close();
 
 	/*********************************读取人物名*********************************************/
@@ -128,7 +138,4 @@ void GameEngine::run()
 	this->scene->run();
 }
 
-void GameEngine::over()
-{
-	RUNGAME = 0; LEAVEGAME = 1;
-}
+void GameEngine::over(){}
