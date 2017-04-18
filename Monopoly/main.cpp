@@ -18,6 +18,7 @@ int main()
 	gameEngine->initialize();                     //先暂停监听线程
 
 	buttonManager = new ButtonManager();          //严格来讲它的声明位置是无关紧要的
+	AI_Engine = new AI();
 	easyScene = new EasyScene();
 	playerManager = new PlayerManager(RealPlayerCount, robotPlayerCount);    //要在easyScene之后声明,但要在绘图之前
 

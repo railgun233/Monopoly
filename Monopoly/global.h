@@ -16,6 +16,9 @@ enum BUTTON_TYPE												  //按键类型(按下了哪个按键)
 enum MOUSE_STATE												  //鼠标标志位
 {Mouse_Empty = 0, Mouse_LeftClick = 1, Mouse_RightClick = 2}; extern MOUSE_STATE Mouse_State;
 
+//AI类型
+enum AI_TYPE { AI_Rude = 0, AI_Cautious = 1, AI_Smart = 2 };
+
 //格子的价格类型或特殊属性,为方便起见，有特殊属性的格子不可买卖
 //下方的Cell_CannotBuy用于占位,补充代码时删去
 enum CELL_TYPE { ExpensivePrice = 0, NormalPrice = 1, CheapPrice = 2, Cell_Empty = 100,Cell_CannotBuy=101 };

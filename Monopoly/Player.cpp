@@ -5,7 +5,8 @@
 #include"Manager.h"
 #include"Cell.h"
 #include"Button.h"
-
+//把购买界面的显示放在Player类而非RealPlayer类是我的一大失误
+//但是，懒得改，哈哈哈哈
 
 Player::Player(wchar_t * name_, PLAYER_TYPE sign_, PLAYER_POS pos_, MONEY money_)
 {

@@ -25,4 +25,5 @@ HPEN penArr[penCount]; HBRUSH brushArr[brushCount];	HFONT fontArr[fontCount]; HB
 POINT mousePos;		MOUSE_STATE Mouse_State;
 Button** ButtonList;
 ButtonManager* buttonManager;	PlayerManager *playerManager;	EasyScene *easyScene;
+AI* AI_Engine;
 const wchar_t* Button_Name[] = { L"ÖÀ÷»×Ó",L"¹ºÂò" ,L"È¡Ïû" };

@@ -73,7 +73,7 @@ void EasyScene::loadData()  //¶ÁÈ¡Êı¾İµÄ²Ù×÷¾¡Á¿ÔÚÓÎÏ·×¼±¸½×¶ÎÈ«²¿Íê³É£¬ÓÈÆäÊÇÎÒ
 	/*************************¶ÁÈ¡¸ñ×Ó***********************/
 	input.open("data/EasySceneCell.txt", std::iostream::in);
 
-	//¶ÁÈ¡¸ñ×ÓµÄ²»Í¬¼ÛÇ®
+	//¶ÁÈ¡²»Í¬ÀàĞÍ¸ñ×ÓµÄ²»Í¬¼ÛÇ®
 	while (input >> discard && (discard != '#'))
 		continue;
 	input >> cellPrice[ExpensivePrice] >> cellPrice[NormalPrice] >> cellPrice[CheapPrice];
@@ -140,7 +140,7 @@ void EasyScene::run()            //´Ëº¯ÊıÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ğ§¹û¶
 	while (RUNGAME)
 	{
 		if (REPAINT)                //½çÃæ²»¸Ä±äµÄÇé¿öÏÂ¾Í²»½øĞĞÖØ»æ£¬Òª½øĞĞÖØ»æ×î¶ÌÊ±¼äÊÇdeltaTime
-		{
+		{                           //ÊÂÊµÉÏÕâ²¿·ÖÃ²ËÆ¸ù±¾¾ÍÃ»ÓÃµ½¹ı£¬¶¼ÊÇÖ±½Ó´ÓÍâ²¿½øĞĞ»æÖÆ
 			hdc = GetDC(hWnd);
 			FillRect(hdc, &rect, hClear);
 			Sleep(deltaTime);
@@ -177,6 +177,7 @@ void EasyScene::showMessageBar()
 	hWnd = GetConsoleWindow();
 	hdc = GetDC(hWnd);
 	SetTextColor(hdc, RGB(0, 255, 0));
+	SelectObject(hdc, fontArr[fontSize_20]);
 	SetBkColor(hdc, RGB(0, 0, 0));
 
 	wchar_t title[] = L"ÏûÏ¢¼ÇÂ¼";
@@ -321,6 +322,7 @@ void EasyScene::movePlayer(int n,PLAYER_TYPE type)
 	};
 
 	//ÎªÁË¿ÉÀ©Õ¹ĞÔ£¬ÎÒÎªÍøÂç°æÁôÏÂÁË½Ó¿Ú£¬µ«ÔÚÕâÀïÎªÊ¡ÊÂÖ±½Ó°ÑÕâ¸ö½Ó¿ÚÆÆ»µÁË£¬×¢Òâ!
+	//Ò²¾ÍÊÇËµ,ÔÚ´Ë´¦ÊÇÄ¬ÈÏÕæÈËÍæ¼ÒÖ»ÓĞÒ»¸öµÄ
 	for (int i = 0; i < playerManager->realPlayerCount;++i)   
 		if (playerManager->realPlayerList[i].sign == type)
 		{
@@ -333,6 +335,7 @@ void EasyScene::movePlayer(int n,PLAYER_TYPE type)
 		if (playerManager->robotList[i].sign == type)
 		{
 			fn(&(playerManager->robotList[i]));
+			playerManager->robotList[i].buy();
 			return;
 		}
 }

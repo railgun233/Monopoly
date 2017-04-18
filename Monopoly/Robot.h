@@ -10,5 +10,6 @@ public:
 	~robot(){}
 
 	void moveTo(PLAYER_POS newPos) {}
-	void decide(){}
+	AI_TYPE chooseAI();
+	void buy();
 };

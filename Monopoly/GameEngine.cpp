@@ -30,13 +30,13 @@ GameEngine::GameEngine()
 	brushArr[YellowBrush] = CreateSolidBrush(RGB(255, 255, 0));
 	brushArr[PinkBrush] = CreateSolidBrush(RGB(255, 0, 255));
 
-	lightBrushArr[WhiteBrush] = CreateSolidBrush(RGB(50, 50, 50));
+	lightBrushArr[WhiteBrush] = CreateSolidBrush(RGB(255, 255, 255));
 	lightBrushArr[BlackBrush] = CreateSolidBrush(RGB(0, 0, 0));
-	lightBrushArr[RedBrush] = CreateSolidBrush(RGB(50, 0, 0));
-	lightBrushArr[BlueBrush] = CreateSolidBrush(RGB(0, 0, 50));
-	lightBrushArr[GreenBrush] = CreateSolidBrush(RGB(0, 50, 0));
-	lightBrushArr[YellowBrush] = CreateSolidBrush(RGB(50, 50, 0));
-	lightBrushArr[PinkBrush] = CreateSolidBrush(RGB(50, 0, 50));
+	lightBrushArr[RedBrush] = CreateSolidBrush(RGB(100, 0, 0));
+	lightBrushArr[BlueBrush] = CreateSolidBrush(RGB(0, 0, 100));
+	lightBrushArr[GreenBrush] = CreateSolidBrush(RGB(0, 100, 0));
+	lightBrushArr[YellowBrush] = CreateSolidBrush(RGB(100, 100, 0));
+	lightBrushArr[PinkBrush] = CreateSolidBrush(RGB(100, 0, 100));
 
 	fontArr[fontSize_20] = CreateFont(20, 0, 0, 0, 0, FALSE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
 	fontArr[fontSize_50]= CreateFont(50, 0, 80, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, L"Dotum");
