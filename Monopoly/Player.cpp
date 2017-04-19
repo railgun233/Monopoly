@@ -43,8 +43,63 @@ void Player::moveTo(PLAYER_POS newPos)
 void Player::colliderCell()
 {
 	if ((easyScene->cellManager->cellList[pos].cellType == Cell_Empty)
-		|| (easyScene->cellManager->cellList[pos].master) == sign
-		|| (easyScene->cellManager->cellList[pos].master)==Player_Empty)
+		|| (easyScene->cellManager->cellList[pos].master) == sign)
+		return;
+	else if (easyScene->cellManager->cellList[pos].cellType==Cell_RandomEvent)   //随机事件
+	{
+		int choice = rand() % RandomEventChoice;               //共有5种随机事件，最后一种为无事件
+
+		HBRUSH hClear = CreateSolidBrush(RGB(0, 0, 0));
+		RECT rect = { WindowWidth,WindowHeight };
+
+		switch (choice)
+		{
+		case 0:                                                //金钱减半事件
+		{
+			wchar_t text[50];
+			wcscpy(text, PlayerName[sign]);
+			wchar_t eve[] = L"在公共场所放声高歌,被罚款";
+			int __money__ = money / 2;
+			wchar_t ent[5];	char entt[5];
+			_itoa(__money__, entt, 10);
+			mbstowcs(ent, entt, 5);
+			wcscat(text, eve);	wcscat(text, ent);
+
+			money -= __money__;
+
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			easyScene->paint();
+
+			hdc = GetDC(hWnd);
+			SelectObject(hdc, fontArr[fontSize_20]);
+			SetTextColor(hdc, RGB(0, 255, 0));
+			SetBkColor(hdc, RGB(0, 0, 0));
+			TextOut(hdc, buyMessageText_x-30, buyMessageText_y, text, wcslen(text));
+			Sleep(1000);
+			return;
+		}
+		case 1:
+		{
+
+		}
+		case 2:
+		{
+			
+		}
+		case 3:
+		{
+			
+		}
+		case 4:
+		{
+			
+		}
+		default:
+			return;
+		}
+	}
+	else if ((easyScene->cellManager->cellList[pos].master) == Player_Empty)
 		return;
 	else                                 //到了添加新的格子属性后再在这里添加else if
 	{
@@ -81,7 +136,7 @@ void Player::colliderCell()
 void Player::buyCell()
 {
 	int price = easyScene->cellManager->cellList[pos].price;
-	if (easyScene->cellManager->cellList[pos].cellType<=Cell_Empty
+	if (easyScene->cellManager->cellList[pos].cellType<Cell_Empty
 		&&easyScene->cellManager->cellList[pos].master == Player_Empty
 		&&price <= money)
 	{
@@ -131,6 +186,19 @@ void Player::directBuy()
 {
 	easyScene->cellManager->cellList[pos].master = sign;
 	money -= easyScene->cellManager->cellList[pos].price;
+
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+	//显示相应的购买信息
+	SelectObject(hdc, fontArr[fontSize_20]);
+	SetTextColor(hdc, RGB(0, 255, 0));          //设置文本颜色、背景色、大小
+	SetBkColor(hdc, RGB(0, 0, 0));
+
+	wchar_t text[50];
+	wcscpy(text, PlayerName[sign]);
+	wcscat(text, L"购买了一块土地");
+	TextOut(hdc, buyMessageText_x, buyMessageText_y, text, wcslen(text));
+	Sleep(50);
 }
 
 void Player::printCellAndPlayerMessage()

@@ -86,6 +86,11 @@ void GameEngine::initialize()
 		continue;
 	input >> cellAndPlayerText_x >> cellAndPlayerText_y;
 
+	//读取购买时信息文本出现的起始位置
+	while (input >> discard && (discard != '#'))
+		continue;
+	input >> buyMessageText_x >> buyMessageText_y;
+
 	input.close();
 	/****************************************宽字符读取部分**************************************************/
 	wchar_t wdiscard;

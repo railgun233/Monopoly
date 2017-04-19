@@ -22,7 +22,7 @@ AI_TYPE robot::chooseAI()
 void robot::buy()
 {
 	int price = easyScene->cellManager->cellList[pos].price;
-	if (easyScene->cellManager->cellList[pos].cellType <= Cell_Empty
+	if (easyScene->cellManager->cellList[pos].cellType < Cell_Empty
 		&&easyScene->cellManager->cellList[pos].master == Player_Empty
 		&&price <= money)
 	{

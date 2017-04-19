@@ -100,6 +100,8 @@ void PlayerManager::deletePlayer(PLAYER_TYPE type)
 
 void PlayerManager::deletePlayer(int n)
 {
+	PLAYER_TYPE type = robotList[n].sign;
+
 	robot* temp= new robot[robotCount - 1];
 	int j = 0;
 	for (int i = 0; i < robotCount; ++i)
@@ -112,4 +114,16 @@ void PlayerManager::deletePlayer(int n)
 	robotList = temp;
 	--robotCount;
 	--playerCount;
+
+	hWnd = GetConsoleWindow();
+	hdc = GetDC(hWnd);
+
+	SelectObject(hdc, fontArr[fontSize_20]);
+	SetTextColor(hdc, RGB(0, 255, 0));
+	SetBkColor(hdc, RGB(0, 0, 0));
+
+	wchar_t text[15];
+	wcscpy(text, PlayerName[type]);
+	wcscat(text, L"ÒÑÆÆ²ú");
+	TextOut(hdc, buyMessageText_x, buyMessageText_y, text, wcslen(text));
 }

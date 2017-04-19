@@ -15,11 +15,11 @@ void Cell::changeValue(int left, int top, int right, int bottom,PLAYER_TYPE mast
 	{
 	case ExpensivePrice:	case NormalPrice:	case CheapPrice:
 		price = cellPrice[cellType];
-		this->cellType = cellType;
 		break;
 	default:
 		break;
 	}
+	this->cellType = cellType;
 }
 
 Cell & Cell::operator=(const Cell & other)

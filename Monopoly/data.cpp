@@ -13,6 +13,7 @@ int WindowWidth;	int WindowHeight;
 int CellCount;	int initialMoney;
 int cellAndPlayerText_x, cellAndPlayerText_y;
 int DicePos_x, DicePos_y;
+int buyMessageText_x, buyMessageText_y;
 int cellPrice[cellPriceCount];
 wchar_t PlayerName[MaxPlayerCount][StringMaxLength];
 //句柄全局变量

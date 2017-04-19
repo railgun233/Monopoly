@@ -20,7 +20,9 @@ enum AI_TYPE { AI_Rude = 0, AI_Cautious = 1, AI_Smart = 2 };      //AI类型
 
 //格子的价格类型或特殊属性,为方便起见，有特殊属性的格子不可买卖
 //下方的Cell_CannotBuy用于占位,补充代码时删去
-enum CELL_TYPE { ExpensivePrice = 0, NormalPrice = 1, CheapPrice = 2, Cell_Empty = 100,Cell_CannotBuy=101 };
+enum CELL_TYPE
+{ ExpensivePrice = 0, NormalPrice = 1, CheapPrice = 2, Cell_Empty = 100,Cell_CannotBuy=101,Cell_RandomEvent=102 };
+const int RandomEventChoice = 5;
 const int cellPriceCount=3; extern int cellPrice[cellPriceCount];
 
 typedef int PLAYER_POS;											  //标记Player在哪个格子上
@@ -80,6 +82,7 @@ extern BOOL BEINGPLAY;		extern BOOL GAMEOVER;	extern int DiceNumber;
 extern BOOL CLICKBUY;	extern BOOL NOTBUY;
 const int MessageCount = 4;	extern int nowMessageCount; extern deque<wchar_t*> messageList;
 
+extern int buyMessageText_x, buyMessageText_y;
 extern const wchar_t* Button_Name[];
 extern wchar_t ruleText[128];	extern wchar_t promptText[128];
 /**************************************函数部分********************************************************/

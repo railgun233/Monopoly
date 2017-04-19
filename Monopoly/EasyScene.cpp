@@ -162,7 +162,8 @@ void EasyScene::run()            //´Ëº¯ÊıÄÚµÄ´úÂëºÜ´ó²¿·Ö¶¼Ö»ÊÇÎªÁË²âÊÔ¶¯Ì¬Ğ§¹û¶
 			SetBkColor(hdc, RGB(0, 0, 0));
 			SelectObject(hdc, fontArr[fontSize_50]);
 
-			TextOut(hdc, 100, 100, L"ÓÎÏ·½áÊø", 4);
+			TextOut(hdc, 650, 470, L"ÓÎÏ·½áÊø", 4);
+			Sleep(5000);
 			ReleaseDC(hWnd, hdc);
 			exit(0);
 		}
@@ -191,13 +192,14 @@ void EasyScene::allStartMove()
 
 	PLAYER_TYPE deleteArr[4];               //×î¶à¾Í4¸öÍæ¼Ò,Ö±½ÓÓ²±àÂë³É4ÁË£¬ÀÁ
 	int cc = 0;
+
 	//¼ì²éÓĞÃ»ÓĞÆÆ²úµÄÍæ¼Ò£¬Ö±½ÓÌŞ³ıËû
 	//Ô­±¾ÎÒÊÇÔÚÃ¿ÒÆ¶¯Ò»¸öÍæ¼Ò¾Í½øĞĞÒ»´Îµ¥¶ÀµÄÅĞ¶Ï£¬µ«·¢ÏÖÓÉÓÚ½á¹¹ÏŞÖÆÄÇÑù×ö»áÔì³ÉÖØ´óbug£¬¹Ê·ÅÆú
 	for (int i = 0; i < playerManager->realPlayerCount; ++i)
-		if (playerManager->realPlayerList[i].money == Bankrupt)
+		if (playerManager->realPlayerList[i].money <= Bankrupt)
 			deleteArr[cc++] = playerManager->realPlayerList[i].sign;
 	for (int i = 0; i < playerManager->robotCount; ++i)
-		if (playerManager->robotList[i].money == Bankrupt)
+		if (playerManager->robotList[i].money <= Bankrupt)
 			deleteArr[cc++] = playerManager->robotList[i].sign;
 
 	for (int i = 0; i < cc; ++i)
