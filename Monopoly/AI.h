@@ -5,8 +5,8 @@ class AI
 {
 private:
 	bool rudeAI();
-	bool cautiousAI() { return false; }
-	bool smartAI() { return false; }
+	bool cautiousAI() { return true; }
+	bool smartAI() { return true; }
 
 public:
 	AI(){}

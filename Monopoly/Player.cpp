@@ -59,7 +59,7 @@ void Player::colliderCell()
 			wchar_t text[50];
 			wcscpy(text, PlayerName[sign]);
 			wchar_t eve[] = L"在公共场所放声高歌,被罚款";
-			int __money__ = money / 2;
+			int __money__ = money / 3;
 			wchar_t ent[5];	char entt[5];
 			_itoa(__money__, entt, 10);
 			mbstowcs(ent, entt, 5);
@@ -76,24 +76,83 @@ void Player::colliderCell()
 			SetTextColor(hdc, RGB(0, 255, 0));
 			SetBkColor(hdc, RGB(0, 0, 0));
 			TextOut(hdc, buyMessageText_x-30, buyMessageText_y, text, wcslen(text));
-			Sleep(1000);
+			Sleep(3000);
 			return;
 		}
 		case 1:
 		{
+			wchar_t text[50];
+			wcscpy(text, PlayerName[sign]);
+			wchar_t eve[] = L"扶老奶奶过马路，被奖励";
+			int __money__ = money / 3;
+			wchar_t ent[5];	char entt[5];
+			_itoa(__money__, entt, 10);
+			mbstowcs(ent, entt, 5);
+			wcscat(text, eve);	wcscat(text, ent);
 
+			money += __money__;
+
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			easyScene->paint();
+
+			hdc = GetDC(hWnd);
+			SelectObject(hdc, fontArr[fontSize_20]);
+			SetTextColor(hdc, RGB(0, 255, 0));
+			SetBkColor(hdc, RGB(0, 0, 0));
+			TextOut(hdc, buyMessageText_x - 30, buyMessageText_y, text, wcslen(text));
+			Sleep(3000);
+			return;
 		}
 		case 2:
 		{
-			
+			wchar_t text[50];
+			wcscpy(text, PlayerName[sign]);
+			wchar_t eve[] = L"遭遇抢劫，被夺走";
+			int __money__ = money/2;
+			wchar_t ent[5];	char entt[5];
+			_itoa(__money__, entt, 10);
+			mbstowcs(ent, entt, 5);
+			wcscat(text, eve);	wcscat(text, ent);
+
+			money -= __money__;
+
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			easyScene->paint();
+
+			hdc = GetDC(hWnd);
+			SelectObject(hdc, fontArr[fontSize_20]);
+			SetTextColor(hdc, RGB(0, 255, 0));
+			SetBkColor(hdc, RGB(0, 0, 0));
+			TextOut(hdc, buyMessageText_x - 30, buyMessageText_y, text, wcslen(text));
+			Sleep(3000);
+			return;
 		}
 		case 3:
 		{
-			
-		}
-		case 4:
-		{
-			
+			wchar_t text[50];
+			wcscpy(text, PlayerName[sign]);
+			wchar_t eve[] = L"遇到了香港记者，勒索了他";
+			int __money__ = money / 2;
+			wchar_t ent[5];	char entt[5];
+			_itoa(__money__, entt, 10);
+			mbstowcs(ent, entt, 5);
+			wcscat(text, eve);	wcscat(text, ent);
+
+			money += __money__;
+
+			hdc = GetDC(hWnd);
+			FillRect(hdc, &rect, hClear);
+			easyScene->paint();
+
+			hdc = GetDC(hWnd);
+			SelectObject(hdc, fontArr[fontSize_20]);
+			SetTextColor(hdc, RGB(0, 255, 0));
+			SetBkColor(hdc, RGB(0, 0, 0));
+			TextOut(hdc, buyMessageText_x - 30, buyMessageText_y, text, wcslen(text));
+			Sleep(3000);
+			return;
 		}
 		default:
 			return;
@@ -198,7 +257,7 @@ void Player::directBuy()
 	wcscpy(text, PlayerName[sign]);
 	wcscat(text, L"购买了一块土地");
 	TextOut(hdc, buyMessageText_x, buyMessageText_y, text, wcslen(text));
-	Sleep(50);
+	Sleep(1200);
 }
 
 void Player::printCellAndPlayerMessage()
