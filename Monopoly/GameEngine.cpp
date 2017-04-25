@@ -2,8 +2,13 @@
 #include"EasyScene.h"
 #include"Manager.h"
 #include<fstream>
+#include<iostream>
 using std::ifstream;
 using std::wifstream;
+using std::cout;
+using std::noskipws;
+
+void startPage();
 
 GameEngine::GameEngine()
 {
@@ -131,6 +136,9 @@ void GameEngine::initialize()
 
 	//RECT rect_;                                           //这两个函数只用在测试时期获取需调整的数值(调试时使用)
 	//GetWindowRect(hWnd, &rect_);
+
+	//开始界面
+	startPage();
 }
 
 void GameEngine::loadScene(Scene *scene, PlayerManager *player_manager)
@@ -144,3 +152,24 @@ void GameEngine::run()
 }
 
 void GameEngine::over(){}
+
+void startPage()
+{
+	char *pattern=new char[ConsoleBufferWidth+2];
+	pattern[181] = '\0';
+	ifstream input(L"data/小富翁.txt");
+	COORD outputPos = { 0,10 };
+	input >> noskipws;
+	for (int i = 0; i < 30; ++i)
+	{
+		for (int j = 0; j < ConsoleBufferWidth+1; ++j)
+			input >> pattern[j];
+
+		SetConsoleCursorPosition(hOutput, outputPos);
+		cout << pattern;
+		++outputPos.Y;
+	}
+	input.close();
+	
+	getchar();
+}
